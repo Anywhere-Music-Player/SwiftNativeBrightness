@@ -1,51 +1,44 @@
 <div align="center">
 
-<img src=".github/Icon-cropped.png" width="128" alt="MonitorControl app icon">
+<img src=".github/Icon-cropped.png" width="128" alt="SwiftNativeBrightness app icon">
 
-# MonitorControl
+# SwiftNativeBrightness
 
 **Your displays, one menu away.**
 
 Control brightness, volume and contrast from the macOS menu bar or your keyboard.
 
-[![Upstream release](https://img.shields.io/github/v/release/MonitorControl/MonitorControl?label=upstream%20release)](https://github.com/MonitorControl/MonitorControl/releases/latest)
 [![macOS](https://img.shields.io/badge/macOS-14%2B-007AFF)](#macos-compatibility)
 [![Swift](https://img.shields.io/badge/Swift-AppKit%20%2B%20SwiftUI-F05138?logo=swift&logoColor=white)](#how-to-build)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3fb950)](License.txt)
 
-**[Download upstream app](https://github.com/MonitorControl/MonitorControl/releases/latest)** · **[Quick start](#quick-start)** · **[Build this fork](#how-to-build)**
-
-[Documentation](#documentation) · [Upstream releases](https://github.com/MonitorControl/MonitorControl/releases) · [Issues](https://github.com/Anywhere-Music-Player/MonitorControl/issues)
+**[Build from source](#how-to-build)** · **[Releases](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases)** · **[Issues](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/issues)**
 
 </div>
 
-MonitorControl is a free, open-source macOS menu bar app for managing built-in and external displays. It combines hardware controls with software dimming and supports both menu sliders and keyboard shortcuts.
+SwiftNativeBrightness is a free, open-source macOS menu bar app for managing built-in and external displays. It combines hardware controls with software dimming, native menu sliders, a sidebar settings window and system appearance controls.
 
-This is the [Anywhere Music Player fork](https://github.com/Anywhere-Music-Player/MonitorControl), on the `dev/modernize-monitorcontrol` branch. It adds a modern settings window and system appearance controls. The screenshots below show this branch. **The fork does not currently publish its own releases:** the download links and Homebrew command install the upstream app, which may differ from this version.
+It is an independently maintained fork of [MonitorControl](https://github.com/MonitorControl/MonitorControl), with system appearance controls adapted from [Crisp](https://github.com/didriksg/Crisp). This also continues the idea behind my older [NativeDisplayBrightness](https://github.com/Anywhere-Music-Player/NativeDisplayBrightness) app.
+
+**Build from source for now.** There is no published SwiftNativeBrightness release yet. MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app, not this one.
 
 <p align="center">
-  <img src=".github/screenshot.png" width="300" alt="MonitorControl menu with display brightness sliders, system appearance controls and Night Shift temperature">
+  <img src=".github/screenshot.png" width="300" alt="SwiftNativeBrightness menu with display brightness sliders, system appearance controls and Night Shift temperature">
 </p>
+
+The screenshots were captured before the rename.
 
 ## Quick start
 
-### Install the upstream app
+[Build from source](#how-to-build), then copy **SwiftNativeBrightness.app** to Applications. Future binaries will be published on this project's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases).
 
-Download the latest `.dmg` from [upstream releases](https://github.com/MonitorControl/MonitorControl/releases/latest), open it and drag MonitorControl to Applications. Or install using [Homebrew](https://formulae.brew.sh/cask/monitorcontrol):
-
-```sh
-brew install --cask monitorcontrol
-```
-
-To use the interface and changes shown in this README, [build this fork from source](#how-to-build) on macOS 14 or later.
-
-### Use
-
-1. Open MonitorControl from Applications and click its brightness icon in the menu bar.
+1. Open SwiftNativeBrightness and click its brightness icon in the menu bar.
 2. Move a display's brightness slider, or use your keyboard brightness keys.
 3. Open **Settings…** to customize keyboard shortcuts and per-display controls.
 
-Native Apple brightness and media keys require **Accessibility** permission in **System Settings → Privacy & Security → Accessibility**. You can skip this permission if you only use the menu sliders. Hardware brightness, volume and contrast depend on your display and connection; see [Supported displays](#supported-displays).
+Native Apple brightness and media keys require **Accessibility** permission in **System Settings → Privacy & Security → Accessibility**. The renamed app has its own bundle identifier and preferences, so grant permission and enable launch at login for SwiftNativeBrightness separately. Run only one display-control app at a time to avoid conflicting adjustments.
+
+**Check for updates** opens this project's Releases page. Automatic updates are not configured; the app does not use MonitorControl's update feed or signing key.
 
 ## Major features
 
@@ -54,7 +47,7 @@ Native Apple brightness and media keys require **Accessibility** permission in *
 | Brightness | Hardware backlight control, smooth transitions, software dimming and combined dimming below the hardware minimum. |
 | Audio & contrast | Volume and contrast on monitors that expose these controls through DDC/CI. |
 | Multiple displays | Per-display sliders, synchronized brightness and keyboard shortcuts. |
-| System appearance | Dark Mode, Night Shift, True Tone and Night Shift temperature controls in this fork. |
+| System appearance | Dark Mode, Night Shift, True Tone and Night Shift temperature controls. |
 | Settings | Resizable sidebar window, display information, launch at login and advanced hardware options. |
 
 <details>
@@ -84,7 +77,7 @@ For additional features, more advanced brightness control with XDR/HDR brightnes
 ### Settings
 
 <div align="center">
-<img src=".github/settings-general.png" width="940" alt="MonitorControl settings with sidebar navigation and grouped General controls"/>
+<img src=".github/settings-general.png" width="940" alt="SwiftNativeBrightness settings with sidebar navigation and grouped General controls"/>
 </div>
 
 Use the sidebar to switch between General, Appearance, Keyboard, Displays and About.
@@ -93,32 +86,11 @@ which sliders, display information and system controls appear in the menu. Keybo
 and Displays retain the existing shortcuts and per-display options, including advanced
 DDC settings.
 
-## How to install and use the app
-
-1. [Download the app](https://github.com/MonitorControl/MonitorControl/releases)
-2. Copy the MonitorControl app file from the .dmg file to your Applications folder
-3. Click on the `MonitorControl` app
-4. Add the app to `Accessibility` under `System Settings` » `Privacy & Security` as prompted (this is required only if you wish to use the native Apple keyboard brightness and media keys - if this is not the case, you can safely skip this step).
-5. Use your keyboard or the sliders in the app menu (a brightness symbol in the macOS menubar as shown on the screenshot above) to control your displays.
-6. Open `Settings…` for customization options (enable `Show advanced settings` for even more options).
-7. You can set up custom keyboard shortcuts under the `Keyboard` in Settings (the app uses Apple media keys by default).
-8. If you have any questions, go to [Discussions](https://github.com/MonitorControl/MonitorControl/discussions)!
-
 ### macOS compatibility
 
-This fork’s `dev/modernize-monitorcontrol` branch targets macOS 14 or later. The version in its committed project is 26.0.0; this is not a published fork release. For upstream compatibility and downloads, consult the [upstream release notes](https://github.com/MonitorControl/MonitorControl/releases). Earlier upstream releases remain available for older macOS versions.
+SwiftNativeBrightness requires macOS 14 or later. The project version is 26.0.0; this is not a published release. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
 
-| MonitorControl version | macOS version     |
-| ---------------------- | ----------------- |
-| v4.0.0                 | Catalina 10.15*   |
-| v3.1.1                 | Mojave 10.14      |
-| v2.1.0                 | Sierra 10.12      |
-
-_* With some limitations - full functionality available on macOS 11 Big Sur or newer._
-
-For upstream macOS 27 Golden Gate compatibility [v4.4.0 or newer](https://github.com/MonitorControl/MonitorControl/releases) is required!
-
-Please note that current versions have limited native macOS OSD support on macOS Tahoe - although the Control Center brightness or volume OSD appears, the OSD percentage value will not show or update.
+Native macOS OSD behavior depends on the OS version. On Tahoe, the OSD percentage may not show or update.
 
 ### Supported displays
 
@@ -133,44 +105,23 @@ Notable exceptions for hardware control compatibility:
 - Some displays (notably EIZO) use MCCS over USB or an entirely custom protocol for control. These displays are supported with software dimming only.
 - DisplayLink docks and dongles do not allow for DDC control on Macs, only software dimming is available for these connections.
 
-## Documentation
+## Contributing
 
-- [Installation and usage](#how-to-install-and-use-the-app)
-- [macOS compatibility](#macos-compatibility) and [supported displays](#supported-displays)
-- [Build from source](#how-to-build)
-- [Regression test guide](Tests/README.md)
-- [Upstream discussions](https://github.com/MonitorControl/MonitorControl/discussions)
-
-## Contributing to the project
-
-For this fork, [report an issue](https://github.com/Anywhere-Music-Player/MonitorControl/issues) or [open a pull request](https://github.com/Anywhere-Music-Player/MonitorControl/pulls) targeting `dev/modernize-monitorcontrol`. Include your macOS version, display model, connection type and reproduction steps when reporting display problems. For the upstream app, use [upstream Issues](https://github.com/MonitorControl/MonitorControl/issues).
-
-- If you want, you can fork the code, make improvements and submit a pull request to improve the app. Accepting a PR is solely in the hands of the maintainer - before making fundamental changes expecting it to be accepted, please consult the maintainer of the project!
+[Report an issue](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/issues) or [open a pull request](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/pulls) targeting `dev/swiftnativebrightness`. Include your macOS version, display model, connection type and reproduction steps for display problems.
 
 ## How to build
 
-### Required
-
-- Xcode with a macOS SDK that supports the branch’s macOS 14 deployment target
-- [Swiftlint](https://github.com/realm/SwiftLint)
-- [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)
-- [BartyCrouch](https://github.com/Flinesoft/BartyCrouch) (for updating localizations)
-
-### Build steps
-
-- Clone the project via this Terminal command:
+Use Xcode with a macOS SDK supporting the macOS 14 deployment target. The project also uses [SwiftLint](https://github.com/realm/SwiftLint), [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) and [BartyCrouch](https://github.com/Flinesoft/BartyCrouch) for its build scripts.
 
 ```sh
-git clone --single-branch --branch dev/modernize-monitorcontrol https://github.com/Anywhere-Music-Player/MonitorControl.git
-cd MonitorControl
-open MonitorControl.xcodeproj
+git clone --single-branch --branch dev/swiftnativebrightness https://github.com/Anywhere-Music-Player/SwiftNativeBrightness.git
+cd SwiftNativeBrightness
+open SwiftNativeBrightness.xcodeproj
 ```
 
-Xcode resolves the package dependencies when the project opens. If needed, use **File → Packages → Resolve Package Versions**, then select the MonitorControl scheme and build or run it.
+Select the **SwiftNativeBrightness** scheme and your signing team, then build or run. Xcode resolves package dependencies when the project opens; if needed, use **File → Packages → Resolve Package Versions**.
 
 ### Checks
-
-The fork includes focused regression scripts:
 
 ```sh
 ./Tests/test-night-shift.sh
@@ -189,6 +140,8 @@ See [Tests/README.md](Tests/README.md) for requirements and coverage limits. The
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 
 ## Credits
+
+Original MonitorControl and Crisp copyright notices and MIT licenses are preserved. Thanks to both projects and their contributors.
 
 - [@waydabber](https://github.com/waydabber), maintainer, developer of [BetterDisplay](https://github.com/waydabber/BetterDisplay#readme).
 - [@the0neyouseek](https://github.com/the0neyouseek) - honorary maintainer

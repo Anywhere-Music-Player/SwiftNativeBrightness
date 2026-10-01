@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "56754EAA1D9A4016007BCDC5"
-               BuildableName = "MonitorControl.app"
+               BuildableName = "SwiftNativeBrightness.app"
                BlueprintName = "MonitorControl"
-               ReferencedContainer = "container:MonitorControl.xcodeproj">
+               ReferencedContainer = "container:SwiftNativeBrightness.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,9 +31,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "56754EAA1D9A4016007BCDC5"
-            BuildableName = "MonitorControl.app"
+            BuildableName = "SwiftNativeBrightness.app"
             BlueprintName = "MonitorControl"
-            ReferencedContainer = "container:MonitorControl.xcodeproj">
+            ReferencedContainer = "container:SwiftNativeBrightness.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -54,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "56754EAA1D9A4016007BCDC5"
-            BuildableName = "MonitorControl.app"
+            BuildableName = "SwiftNativeBrightness.app"
             BlueprintName = "MonitorControl"
-            ReferencedContainer = "container:MonitorControl.xcodeproj">
+            ReferencedContainer = "container:SwiftNativeBrightness.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "56754EAA1D9A4016007BCDC5"
-            BuildableName = "MonitorControl.app"
+            BuildableName = "SwiftNativeBrightness.app"
             BlueprintName = "MonitorControl"
-            ReferencedContainer = "container:MonitorControl.xcodeproj">
+            ReferencedContainer = "container:SwiftNativeBrightness.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -94,13 +94,16 @@ struct GeneralSettingsView: View {
   var body: some View {
     Form {
       Section("Application") {
-        SettingsToggle("Launch at login", description: "Start MonitorControl when you log in to your Mac.", isOn: self.preferences.launchAtLogin)
+        SettingsToggle("Launch at login", description: "Start SwiftNativeBrightness when you log in to your Mac.", isOn: self.preferences.launchAtLogin)
         if self.preferences.loginStatus == .requiresApproval {
-          Text("Allow MonitorControl in System Settings > General > Login Items. Enable the toggle again to open those settings.")
+          Text("Allow SwiftNativeBrightness in System Settings > General > Login Items. Enable the toggle again to open those settings.")
             .font(.callout)
             .foregroundStyle(.secondary)
         }
-        SettingsToggle("Automatically check for updates", description: "Check for new versions of MonitorControl.", isOn: self.preferences.boolean(.SUEnableAutomaticChecks))
+        Link("Releases on GitHub", destination: URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases")!)
+        Text("Automatic updates are not configured yet. Check this project's GitHub releases for updates.")
+          .font(.callout)
+          .foregroundStyle(.secondary)
       }
 
       Section("Brightness") {
@@ -122,7 +125,7 @@ struct GeneralSettingsView: View {
       } header: {
         Text("Startup and wake")
       } footer: {
-        Text("Hold Shift while starting MonitorControl to restore defaults in Safe Mode.")
+        Text("Hold Shift while starting SwiftNativeBrightness to restore defaults in Safe Mode.")
       }
 
       Section {
@@ -167,16 +170,16 @@ struct AppearanceSettingsView: View {
           Text("Hidden").tag(MenuItemStyle.hide.rawValue)
         }
         if self.needsQuitButton {
-          Text("Relaunch MonitorControl to access Settings if its menu is hidden.")
+          Text("Relaunch SwiftNativeBrightness to access Settings if its menu is hidden.")
             .font(.callout)
             .foregroundStyle(.secondary)
-          Button("Quit MonitorControl", action: self.quitApplication)
+          Button("Quit SwiftNativeBrightness", action: self.quitApplication)
         }
       }
 
       Section("Display controls") {
         SettingsToggle("Show brightness slider", description: "Control hardware and software brightness from the menu.", isOn: self.preferences.boolean(.hideBrightness, inverted: true))
-        SettingsToggle("Include built-in and Apple displays", description: "Also show their brightness sliders in MonitorControl.", isOn: Binding(
+        SettingsToggle("Include built-in and Apple displays", description: "Also show their brightness sliders in SwiftNativeBrightness.", isOn: Binding(
           get: { self.brightnessVisible && self.preferences.boolean(.hideAppleFromMenu, inverted: true).wrappedValue },
           set: { self.preferences.boolean(.hideAppleFromMenu, inverted: true).wrappedValue = $0 }
         ))

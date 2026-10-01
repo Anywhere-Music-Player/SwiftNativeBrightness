@@ -27,7 +27,7 @@
 "3eO-bN-ZRl.title" = "सूची में प्रत्येक प्रदर्शन के लिए अलग-अलग नियंत्रण दिखाएँ";
 
 /* Class = "NSButtonCell"; title = "https://monitorcontrol.app"; ObjectID = "42n-Zy-AqF"; Note = "#bc-ignore!"; */
-"42n-Zy-AqF.title" = "https://monitorcontrol.app";
+"42n-Zy-AqF.title" = "GitHub repository";
 
 /* Class = "NSMenuItem"; title = "Custom keyboard shortcuts"; ObjectID = "4CG-0I-anB"; */
 "4CG-0I-anB.title" = "अनुकूलित कीबोर्ड शॉर्टकट";
@@ -240,7 +240,7 @@
 "Z3w-eR-qDF.title" = "वॉल्यूम बढ़ाएँ";
 
 /* Class = "NSButtonCell"; title = "Donate"; ObjectID = "ZKk-ve-rS4"; */
-"ZKk-ve-rS4.title" = "दान करें।";
+"ZKk-ve-rS4.title" = "Support MonitorControl";
 
 /* Class = "NSButtonCell"; title = "Show percentages"; ObjectID = "ZUu-MR-XwA"; */
 "ZUu-MR-XwA.title" = "प्रतिशत दिखाएँ";

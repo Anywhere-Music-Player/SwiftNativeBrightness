@@ -26,7 +26,7 @@ class AboutPrefsViewController: NSViewController, SettingsPane {
   }
 
   @IBAction func checkForUpdates(sender: NSButton) {
-    app.updaterController.checkForUpdates(sender)
+    app.checkForUpdates(sender)
   }
 
   @IBAction func openDonate(_: NSButton) {
@@ -36,13 +36,13 @@ class AboutPrefsViewController: NSViewController, SettingsPane {
   }
 
   @IBAction func openWebPage(_: NSButton) {
-    if let url = URL(string: "https://monitorcontrol.app") {
+    if let url = URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness") {
       NSWorkspace.shared.open(url)
     }
   }
 
   @IBAction func openContributorsPage(_: NSButton) {
-    if let url = URL(string: "https://github.com/MonitorControl/MonitorControl/graphs/contributors") {
+    if let url = URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/graphs/contributors") {
       NSWorkspace.shared.open(url)
     }
   }

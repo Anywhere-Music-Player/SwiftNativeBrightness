@@ -51,7 +51,8 @@ class MainPrefsViewController: NSViewController, SettingsPane {
 
   func populateSettings() {
     self.refreshStartAtLogin()
-    self.automaticUpdateCheck.state = prefs.bool(forKey: PrefKey.SUEnableAutomaticChecks.rawValue) ? .on : .off
+    self.automaticUpdateCheck.state = .off
+    self.automaticUpdateCheck.isEnabled = false
     self.combinedBrightness.state = prefs.bool(forKey: PrefKey.disableCombinedBrightness.rawValue) ? .off : .on
     self.allowZeroSwBrightness.state = prefs.bool(forKey: PrefKey.allowZeroSwBrightness.rawValue) ? .on : .off
     self.enableSmooth.state = prefs.bool(forKey: PrefKey.disableSmoothBrightness.rawValue) ? .off : .on

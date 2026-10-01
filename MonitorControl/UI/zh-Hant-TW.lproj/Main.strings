@@ -5,7 +5,7 @@
 "1in-79-6qm.title" = "假設前次的設定可用（建議）";
 
 /* Class = "NSTextFieldCell"; title = "MonitorControl"; ObjectID = "1PJ-14-Bvn"; */
-"1PJ-14-Bvn.title" = "MonitorControl";
+"1PJ-14-Bvn.title" = "SwiftNativeBrightness";
 
 /* Class = "NSMenuItem"; title = "Standard keyboard volume and mute keys"; ObjectID = "1sy-Kd-WL5"; */
 "1sy-Kd-WL5.title" = "標準的鍵盤音量與靜音鍵";
@@ -29,7 +29,7 @@
 "4dX-o1-xAc.title" = "啟用後當使用全螢幕Apps時效果可能不佳。";
 
 /* Class = "NSTextFieldCell"; title = "Welcome to MonitorControl"; ObjectID = "5J0-BD-top"; */
-"5J0-BD-top.title" = "歡迎使用MonitorControl";
+"5J0-BD-top.title" = "歡迎使用SwiftNativeBrightness";
 
 /* Class = "NSButtonCell"; title = "Reset Settings"; ObjectID = "5yT-5F-X5R"; */
 "5yT-5F-X5R.title" = "重置設定";
@@ -50,7 +50,7 @@
 "8Q8-57-xnT.title" = "使用精細的OSD刻度";
 
 /* Class = "NSButtonCell"; title = "Start using MonitorControl"; ObjectID = "8WE-da-OZC"; */
-"8WE-da-OZC.title" = "開始使用MonitorControl";
+"8WE-da-OZC.title" = "開始使用SwiftNativeBrightness";
 
 /* Class = "NSButtonCell"; title = "Special thanks to our contributors!"; ObjectID = "95V-M4-2l5"; */
 "95V-M4-2l5.title" = "特別感謝我們的貢獻者們！";
@@ -209,7 +209,7 @@
 "jVH-oc-rUi.title" = "檢查更新";
 
 /* Class = "NSButtonCell"; title = "Start MonitorControl at Login"; ObjectID = "JWJ-OY-VtE"; */
-"JWJ-OY-VtE.title" = "登入後自動啟動 MonitorControl";
+"JWJ-OY-VtE.title" = "登入後自動啟動 SwiftNativeBrightness";
 
 /* Class = "NSTextFieldCell"; title = "Note: you can press Shift during startup for 'Safe mode' to restore defaults and avoid reading or setting anything."; ObjectID = "Jx2-gO-nq9"; */
 "Jx2-gO-nq9.title" = "註：啟動時按下Shift進入「安全模式」以恢復原始設定並避免讀取或更動任何設定。";
@@ -218,7 +218,7 @@
 "K6A-4z-1aQ.title" = "Apple和內建的螢幕";
 
 /* Class = "NSTextFieldCell"; title = "MonitorControl needs access to \"accessibility\" to use macOS native keys to control your display.\nYou can enable it by adding MonitorControl in System Settings > Security and Privacy > Accessibility."; ObjectID = "kBJ-Zf-1k2"; */
-"kBJ-Zf-1k2.title" = "MonitorControl需要取用「輔助使用」來使用macOS的按鍵組合進而控制您的顯示器。\n您可以前往系統偏好設定 > 安全性和隱私權 > 輔助使用，新增MonitorControl來啟用。";
+"kBJ-Zf-1k2.title" = "SwiftNativeBrightness需要取用「輔助使用」來使用macOS的按鍵組合進而控制您的顯示器。\n您可以前往系統偏好設定 > 安全性和隱私權 > 輔助使用，新增SwiftNativeBrightness來啟用。";
 
 /* Class = "NSTextFieldCell"; title = "Screen to control:"; ObjectID = "Kfj-WK-aSL"; */
 "Kfj-WK-aSL.title" = "控制的螢幕：";
@@ -260,7 +260,7 @@
 "na6-mS-MPi.title" = "避免調整伽瑪值";
 
 /* Class = "NSTextFieldCell"; title = "Ensure MonitorControl is always running when you need it by launching the app at startup."; ObjectID = "nk6-Gh-Mfs"; */
-"nk6-Gh-Mfs.title" = "如需要 MonitorControl 隨時為您服務，可啟用「登入後自動啟動MonitorControl」。";
+"nk6-Gh-Mfs.title" = "如需要 SwiftNativeBrightness 隨時為您服務，可啟用「登入後自動啟動SwiftNativeBrightness」。";
 
 /* Class = "NSTextFieldCell"; title = "Brightness up"; ObjectID = "nty-g6-Sde"; */
 "nty-g6-Sde.title" = "亮度上調";
@@ -410,7 +410,7 @@
 "zHa-xo-XPW.title" = "停用鍵盤";
 
 /* Class = "NSButtonCell"; title = "Donate"; ObjectID = "ZKk-ve-rS4"; */
-"ZKk-ve-rS4.title" = "捐贈";
+"ZKk-ve-rS4.title" = "Support MonitorControl";
 
 /* Class = "NSButtonCell"; title = "Show percentages"; ObjectID = "ZUu-MR-XwA"; */
 "ZUu-MR-XwA.title" = "顯示百分比";

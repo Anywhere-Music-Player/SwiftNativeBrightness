@@ -3,7 +3,7 @@
 "0ca-DG-AgB.title" = "Synchronizácia zmien jasu zo vstavaného displeja a Apple displejov";
 
 /* Class = "NSTextFieldCell"; title = "MonitorControl"; ObjectID = "1PJ-14-Bvn"; */
-"1PJ-14-Bvn.title" = "MonitorControl";
+"1PJ-14-Bvn.title" = "SwiftNativeBrightness";
 
 /* Class = "NSMenuItem"; title = "Assume last saved settings are valid (recommended)"; ObjectID = "1in-79-6qm"; */
 "1in-79-6qm.title" = "Predpokladať, že posledné uložené nastavenia sú platné (odporúča sa)";
@@ -30,7 +30,7 @@
 "4dX-o1-xAc.title" = "Používanie zamerania na okno nemusí fungovať správne s aplikáciami na celú obrazovku.";
 
 /* Class = "NSTextFieldCell"; title = "Welcome to MonitorControl"; ObjectID = "5J0-BD-top"; */
-"5J0-BD-top.title" = "Vitajte v MonitorControl";
+"5J0-BD-top.title" = "Vitajte v SwiftNativeBrightness";
 
 /* Class = "NSButtonCell"; title = "Reset Settings"; ObjectID = "5yT-5F-X5R"; */
 "5yT-5F-X5R.title" = "Obnoviť predvoľby";
@@ -51,7 +51,7 @@
 "8Q8-57-xnT.title" = "Používať jemnú OSD stupnicu pre jas a kontrast";
 
 /* Class = "NSButtonCell"; title = "Start using MonitorControl"; ObjectID = "8WE-da-OZC"; */
-"8WE-da-OZC.title" = "Začať používať MonitorControl";
+"8WE-da-OZC.title" = "Začať používať SwiftNativeBrightness";
 
 /* Class = "NSButtonCell"; title = "Special thanks to our contributors!"; ObjectID = "95V-M4-2l5"; */
 "95V-M4-2l5.title" = "Špeciálne poďakovanie patrí našim spolupracovníkom!";
@@ -141,7 +141,7 @@
 "J3L-MW-iJL.title" = "Použiť jemnú OSD stupnicu pre hlasitosť";
 
 /* Class = "NSButtonCell"; title = "Start MonitorControl at Login"; ObjectID = "JWJ-OY-VtE"; */
-"JWJ-OY-VtE.title" = "Spustiť MonitorControl pri štarte";
+"JWJ-OY-VtE.title" = "Spustiť SwiftNativeBrightness pri štarte";
 
 /* Class = "NSTextFieldCell"; title = "Note: you can press Shift during startup for 'Safe mode' to restore defaults and avoid reading or setting anything."; ObjectID = "Jx2-gO-nq9"; */
 "Jx2-gO-nq9.title" = "Poznámka: Počas spúšťania môžete stlačiť klávesu Shift pre \"núdzový režim\" na obnovenie predvolených nastavení a zabráneniu čítania alebo nastavovania čohokoľvek.";
@@ -225,7 +225,7 @@
 "Z3w-eR-qDF.title" = "Zvýšiť hlasitosť";
 
 /* Class = "NSButtonCell"; title = "Donate"; ObjectID = "ZKk-ve-rS4"; */
-"ZKk-ve-rS4.title" = "Podporiť";
+"ZKk-ve-rS4.title" = "Support MonitorControl";
 
 /* Class = "NSButtonCell"; title = "Show percentages"; ObjectID = "ZUu-MR-XwA"; */
 "ZUu-MR-XwA.title" = "Zobraziť percentá";
@@ -306,7 +306,7 @@
 "jVH-oc-rUi.title" = "Skontrolovať aktualizácie";
 
 /* Class = "NSTextFieldCell"; title = "MonitorControl needs access to \"accessibility\" to use macOS native keys to control your display.\nYou can enable it by adding MonitorControl in System Settings > Security and Privacy > Accessibility."; ObjectID = "kBJ-Zf-1k2"; */
-"kBJ-Zf-1k2.title" = "MonitorControl potrebuje prístup k \"Prístupnosti\" pre ovládanie displeja natívne macOS klávesy.\nMôžete ho povoliť pridaním MonitorControl v Systémové nastavenia > Súkromie a bezpečnosť > Prístupnosť.";
+"kBJ-Zf-1k2.title" = "SwiftNativeBrightness potrebuje prístup k \"Prístupnosti\" pre ovládanie displeja natívne macOS klávesy.\nMôžete ho povoliť pridaním SwiftNativeBrightness v Systémové nastavenia > Súkromie a bezpečnosť > Prístupnosť.";
 
 /* Class = "NSMenuItem"; title = "Depends on mouse pointer position"; ObjectID = "km4-hK-auM"; */
 "km4-hK-auM.title" = "Závisí od polohy ukazovateľa myši";
@@ -327,7 +327,7 @@
 "na6-mS-MPi.title" = "Vyhnite sa manipulácii s gama tabuľkou";
 
 /* Class = "NSTextFieldCell"; title = "Ensure MonitorControl is always running when you need it by launching the app at startup."; ObjectID = "nk6-Gh-Mfs"; */
-"nk6-Gh-Mfs.title" = "Spustením aplikácie pri štarte zabezpečíte, aby bol MonitorControl vždy spustený, keď to potrebujete.";
+"nk6-Gh-Mfs.title" = "Spustením aplikácie pri štarte zabezpečíte, aby bol SwiftNativeBrightness vždy spustený, keď to potrebujete.";
 
 /* Class = "NSTextFieldCell"; title = "Brightness up"; ObjectID = "nty-g6-Sde"; */
 "nty-g6-Sde.title" = "Zvýšenie jasu";

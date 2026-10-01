@@ -243,7 +243,7 @@ class MenuHandler: NSMenu, NSMenuDelegate {
                              action: #selector(app.prefsClicked), target: app, key: ",")
     self.addSystemMenuAction(title: NSLocalizedString("Check for updates…", comment: "Shown in menu"),
                              symbol: showIcons ? "arrow.triangle.2.circlepath" : nil,
-                             action: #selector(app.updaterController.checkForUpdates(_:)), target: app.updaterController)
+                             action: #selector(app.checkForUpdates(_:)), target: app)
     self.addItem(NSMenuItem.separator())
     self.addSystemMenuAction(title: NSLocalizedString("Quit", comment: "Shown in menu"),
                              symbol: nil, action: #selector(app.quitClicked), target: app, key: "q")

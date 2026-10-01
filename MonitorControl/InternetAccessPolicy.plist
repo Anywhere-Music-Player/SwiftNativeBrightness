@@ -5,53 +5,10 @@
 	<key>ApplicationDescription</key>
 	<string>ApplicationDescription</string>
 	<key>DeveloperName</key>
-	<string>MonitorControl</string>
+	<string>Anywhere Music Player</string>
 	<key>Website</key>
-	<string>https://monitorcontrol.app</string>
+	<string>https://github.com/Anywhere-Music-Player/SwiftNativeBrightness</string>
 	<key>Connections</key>
-	<array>
-		<dict>
-			<key>IsIncoming</key>
-			<false/>
-			<key>Host</key>
-			<string>monitorcontrol.app</string>
-			<key>NetworkProtocol</key>
-			<string>TCP</string>
-			<key>Port</key>
-			<string>443</string>
-			<key>Purpose</key>
-			<string>SoftwareUpdatePurpose</string>
-			<key>DenyConsequences</key>
-			<string>SoftwareUpdateDenyConsequences</string>
-		</dict>
-		<dict>
-			<key>IsIncoming</key>
-			<false/>
-			<key>Host</key>
-			<string>github.com</string>
-			<key>NetworkProtocol</key>
-			<string>TCP</string>
-			<key>Port</key>
-			<string>443</string>
-			<key>Purpose</key>
-			<string>SoftwareUpdatePurpose</string>
-			<key>DenyConsequences</key>
-			<string>SoftwareUpdateDenyConsequences</string>
-		</dict>
-		<dict>
-			<key>IsIncoming</key>
-			<false/>
-			<key>Host</key>
-			<string>githubusercontent.com</string>
-			<key>NetworkProtocol</key>
-			<string>TCP</string>
-			<key>Port</key>
-			<string>443</string>
-			<key>Purpose</key>
-			<string>SoftwareUpdatePurpose</string>
-			<key>DenyConsequences</key>
-			<string>SoftwareUpdateDenyConsequences</string>
-		</dict>
-	</array>
+	<array/>
 </dict>
 </plist>

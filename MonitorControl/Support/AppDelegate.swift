@@ -7,7 +7,6 @@ import MediaKeyTap
 import os.log
 import ServiceManagement
 import SimplyCoreAudio
-import Sparkle
 
 class AppDelegate: NSObject, NSApplicationDelegate {
   let statusItem: NSStatusItem = {
@@ -28,7 +27,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   var jobRunning = false
   var startupActionWriteCounter: Int = 0
   var audioPlayer: AVAudioPlayer?
-  let updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: UpdaterDelegate(), userDriverDelegate: nil)
 
   lazy var settingsWindowController = ModernSettingsWindowController()
 
@@ -47,7 +45,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     CGDisplayRegisterReconfigurationCallback({ _, _, _ in app.displayReconfigured() }, nil)
     self.configure(firstrun: true)
     DisplayManager.shared.createGammaActivityEnforcer()
-    self.updaterController.startUpdater()
+  }
+
+  // Use this project's releases until a signed update feed is available.
+  static let projectURL = URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness")!
+
+  @objc func checkForUpdates(_: Any?) {
+    NSWorkspace.shared.open(Self.projectURL.appendingPathComponent("releases"))
   }
 
   @objc func quitClicked(_: AnyObject) {
@@ -150,7 +154,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     if !prefs.bool(forKey: PrefKey.appAlreadyLaunched.rawValue) {
       // Only settings that are not false, 0 or "" by default are set here. Assumes pre-wiped database.
       prefs.set(true, forKey: PrefKey.appAlreadyLaunched.rawValue)
-      prefs.set(true, forKey: PrefKey.SUEnableAutomaticChecks.rawValue)
     }
   }
 
@@ -274,7 +277,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     if self.sleepID == 0, self.reconfigureID == 0 {
       if !self.jobRunning {
-        os_log("MonitorControl job started.", type: .info)
+        os_log("SwiftNativeBrightness job started.", type: .info)
         self.jobRunning = true
       }
       var refreshedSomething = false
@@ -300,7 +303,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       }
     } else {
       self.jobRunning = false
-      os_log("MonitorControl job died because of sleep or reconfiguration.", type: .info)
+      os_log("SwiftNativeBrightness job died because of sleep or reconfiguration.", type: .info)
     }
   }
 
