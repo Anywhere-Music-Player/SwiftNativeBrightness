@@ -41,7 +41,7 @@ private final class ScrollingSettingsFixture: NSViewController {
 struct SettingsWindowLayoutCheck {
   static func main() {
     NSApplication.shared.setActivationPolicy(.prohibited)
-    let suite = "MonitorControl.WindowTests.\(UUID().uuidString)"
+    let suite = "SwiftNativeBrightness.WindowTests.\(UUID().uuidString)"
     let defaults = UserDefaults(suiteName: suite)!
     let keyboard = FixedSettingsFixture()
     let displays = ScrollingSettingsFixture()
@@ -57,7 +57,7 @@ struct SettingsWindowLayoutCheck {
         }
       }, resetSettings: {}, quitApplication: {}
     )
-    let name = "MonitorControl.WindowTests.\(UUID().uuidString)"
+    let name = "SwiftNativeBrightness.WindowTests.\(UUID().uuidString)"
     let oldWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 180, height: 100), styleMask: [.titled], backing: .buffered, defer: false)
     oldWindow.saveFrame(usingName: name)
     let window = SettingsWindow(content: controller, autosaveName: name)

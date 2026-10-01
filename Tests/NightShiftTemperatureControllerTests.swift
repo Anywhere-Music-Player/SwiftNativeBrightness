@@ -1,5 +1,5 @@
 // Adapted from Crisp. Copyright (c) 2026 Didrik Galteland.
-// See MonitorControl/UI/Crisp-LICENSE.txt.
+// See SwiftNativeBrightness/UI/Crisp-LICENSE.txt.
 
 @testable import MenuControls
 import XCTest

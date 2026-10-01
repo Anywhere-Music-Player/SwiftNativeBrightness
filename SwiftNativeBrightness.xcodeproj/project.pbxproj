@@ -110,7 +110,7 @@
 		6CC260F5256AD8F900613714 /* Preferences+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preferences+Extension.swift"; sourceTree = "<group>"; };
 		6CDA0FCE26485A8300F52125 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6CDA0FD026485AA100F52125 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
-		6CF93A782707981300BA219D /* MonitorControlDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonitorControlDebug.entitlements; sourceTree = "<group>"; };
+		6CF93A782707981300BA219D /* SwiftNativeBrightnessDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftNativeBrightnessDebug.entitlements; sourceTree = "<group>"; };
 		8C1741842707B91100E88D53 /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		8C1741892707B91F00E88D53 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		8C17418B2707B92200E88D53 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InternetAccessPolicy.strings"; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 			children = (
 				AAB2F646273ED127004AB5A4 /* Misc */,
 				28D1DDD1227FB759004CB494 /* Frameworks */,
-				56754EAD1D9A4016007BCDC5 /* MonitorControl */,
+				56754EAD1D9A4016007BCDC5 /* SwiftNativeBrightness */,
 				56754EAC1D9A4016007BCDC5 /* Products */,
 			);
 			indentWidth = 2;
@@ -254,10 +254,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		56754EAD1D9A4016007BCDC5 /* MonitorControl */ = {
+		56754EAD1D9A4016007BCDC5 /* SwiftNativeBrightness */ = {
 			isa = PBXGroup;
 			children = (
-				6CF93A782707981300BA219D /* MonitorControlDebug.entitlements */,
+				6CF93A782707981300BA219D /* SwiftNativeBrightnessDebug.entitlements */,
 				8C1741842707B91100E88D53 /* InternetAccessPolicy.plist */,
 				F01B0686228221B6008E64DB /* Info.plist */,
 				56754EB01D9A4016007BCDC5 /* Assets.xcassets */,
@@ -269,7 +269,7 @@
 				F01B0687228221B6008E64DB /* UI */,
 				F0445D3620023D5B0025AE82 /* View Controllers */,
 			);
-			path = MonitorControl;
+			path = SwiftNativeBrightness;
 			sourceTree = "<group>";
 		};
 		6C6C34F423DB25BF00C0E9CB /* Model */ = {
@@ -378,9 +378,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		56754EAA1D9A4016007BCDC5 /* MonitorControl */ = {
+		56754EAA1D9A4016007BCDC5 /* SwiftNativeBrightness */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 56754EB81D9A4016007BCDC5 /* Build configuration list for PBXNativeTarget "MonitorControl" */;
+			buildConfigurationList = 56754EB81D9A4016007BCDC5 /* Build configuration list for PBXNativeTarget "SwiftNativeBrightness" */;
 			buildPhases = (
 				28D1DE0C227FCFAF004CB494 /* [Format] Run SwiftFormat */,
 				F03A8DF01FFB9D4C0034DC27 /* [Lint] Run SwiftLint */,
@@ -394,7 +394,7 @@
 			);
 			dependencies = (
 			);
-			name = MonitorControl;
+			name = SwiftNativeBrightness;
 			packageProductDependencies = (
 				6CD35F52264FFFC6001F1344 /* SimplyCoreAudio */,
 				6CD35F5526500008001F1344 /* MediaKeyTap */,
@@ -423,7 +423,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 56754EA61D9A4016007BCDC5 /* Build configuration list for PBXProject "MonitorControl" */;
+			buildConfigurationList = 56754EA61D9A4016007BCDC5 /* Build configuration list for PBXProject "SwiftNativeBrightness" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -460,7 +460,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				56754EAA1D9A4016007BCDC5 /* MonitorControl */,
+				56754EAA1D9A4016007BCDC5 /* SwiftNativeBrightness */,
 			);
 		};
 /* End PBXProject section */
@@ -796,31 +796,31 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MonitorControl/MonitorControlDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SwiftNativeBrightness/SwiftNativeBrightnessDebug.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7100;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 299YSU96J7;
+				DEVELOPMENT_TEAM = L3UA46DS39;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/**",
 					"/System/Library/PrivateFrameworks/**",
 				);
-				INFOPLIST_FILE = MonitorControl/Info.plist;
+				INFOPLIST_FILE = SwiftNativeBrightness/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 26.0.0;
+				MARKETING_VERSION = 26.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.anywheremusicplayer.SwiftNativeBrightness;
 				PRODUCT_MODULE_NAME = SwiftNativeBrightness;
 				PRODUCT_NAME = SwiftNativeBrightness;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "MonitorControl/Support/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftNativeBrightness/Support/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.5;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
@@ -835,30 +835,31 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SwiftNativeBrightness/SwiftNativeBrightnessDebug.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7100;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 299YSU96J7;
+				DEVELOPMENT_TEAM = L3UA46DS39;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/**",
 					"/System/Library/PrivateFrameworks/**",
 				);
-				INFOPLIST_FILE = MonitorControl/Info.plist;
+				INFOPLIST_FILE = SwiftNativeBrightness/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 26.0.0;
+				MARKETING_VERSION = 26.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.anywheremusicplayer.SwiftNativeBrightness;
 				PRODUCT_MODULE_NAME = SwiftNativeBrightness;
 				PRODUCT_NAME = SwiftNativeBrightness;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "MonitorControl/Support/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftNativeBrightness/Support/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.5;
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
@@ -871,7 +872,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		56754EA61D9A4016007BCDC5 /* Build configuration list for PBXProject "MonitorControl" */ = {
+		56754EA61D9A4016007BCDC5 /* Build configuration list for PBXProject "SwiftNativeBrightness" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56754EB61D9A4016007BCDC5 /* Debug */,
@@ -880,7 +881,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		56754EB81D9A4016007BCDC5 /* Build configuration list for PBXNativeTarget "MonitorControl" */ = {
+		56754EB81D9A4016007BCDC5 /* Build configuration list for PBXNativeTarget "SwiftNativeBrightness" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				56754EB91D9A4016007BCDC5 /* Debug */,

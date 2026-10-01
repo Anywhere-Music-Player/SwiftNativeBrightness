@@ -20,7 +20,7 @@ SwiftNativeBrightness is a free, open-source macOS menu bar app for managing bui
 
 It is an independently maintained fork of [MonitorControl](https://github.com/MonitorControl/MonitorControl), with system appearance controls adapted from [Crisp](https://github.com/didriksg/Crisp). This also continues the idea behind my older [NativeDisplayBrightness](https://github.com/Anywhere-Music-Player/NativeDisplayBrightness) app.
 
-**Build from source for now.** There is no published SwiftNativeBrightness release yet. MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app, not this one.
+**Version 26.10.0 (build 1).** Download SwiftNativeBrightness from this repository's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases). MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app.
 
 <p align="center">
   <img src=".github/screenshot.png" width="300" alt="SwiftNativeBrightness menu with display brightness sliders, system appearance controls and Night Shift temperature">
@@ -30,7 +30,9 @@ The screenshots were captured before the rename.
 
 ## Quick start
 
-[Build from source](#how-to-build), then copy **SwiftNativeBrightness.app** to Applications. Future binaries will be published on this project's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases).
+Download the ZIP from [Releases](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases), extract it and copy **SwiftNativeBrightness.app** to Applications. You can also [build from source](#how-to-build).
+
+The 26.10.0 binary is ad-hoc signed and is **not notarized by Apple**. macOS may block its first launch. If you trust this download, follow the message in **System Settings > Privacy & Security** to allow it.
 
 1. Open SwiftNativeBrightness and click its brightness icon in the menu bar.
 2. Move a display's brightness slider, or use your keyboard brightness keys.
@@ -88,7 +90,7 @@ DDC settings.
 
 ### macOS compatibility
 
-SwiftNativeBrightness requires macOS 14 or later. The project version is 26.0.0; this is not a published release. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
+SwiftNativeBrightness requires macOS 14 or later. Version 26.10.0 starts at build 1. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
 
 Native macOS OSD behavior depends on the OS version. On Tahoe, the OSD percentage may not show or update.
 
@@ -157,4 +159,4 @@ Original MonitorControl and Crisp copyright notices and MIT licenses are preserv
 
 ## License
 
-MonitorControl is available under the [MIT License](License.txt). UI code derived from Crisp retains its [MIT copyright notice](MonitorControl/UI/Crisp-LICENSE.txt). Third-party dependencies retain their own licenses.
+SwiftNativeBrightness is available under the [MIT License](License.txt). UI code derived from Crisp retains its [MIT copyright notice](SwiftNativeBrightness/UI/Crisp-LICENSE.txt). Third-party dependencies retain their own licenses.

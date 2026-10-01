@@ -1,5 +1,5 @@
 // Adapted from Crisp. Copyright (c) 2026 Didrik Galteland.
-// Distributed under the MIT license; see MonitorControl/UI/Crisp-LICENSE.txt.
+// Distributed under the MIT license; see SwiftNativeBrightness/UI/Crisp-LICENSE.txt.
 
 import AppKit
 import Combine

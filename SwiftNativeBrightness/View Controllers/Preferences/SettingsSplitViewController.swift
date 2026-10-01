@@ -117,7 +117,7 @@ final class SettingsSplitViewController: NSSplitViewController, NSToolbarDelegat
 
   func makeToolbar() -> NSToolbar {
     _ = self.view
-    let toolbar = NSToolbar(identifier: "MonitorControlSettings")
+    let toolbar = NSToolbar(identifier: "SwiftNativeBrightnessSettings")
     toolbar.delegate = self
     toolbar.displayMode = .iconOnly
     toolbar.allowsUserCustomization = false

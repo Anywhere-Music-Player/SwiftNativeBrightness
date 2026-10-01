@@ -8,7 +8,7 @@ final class SettingsPreferencesTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    self.suite = "MonitorControl.SettingsTests.\(UUID().uuidString)"
+    self.suite = "SwiftNativeBrightness.SettingsTests.\(UUID().uuidString)"
     self.defaults = UserDefaults(suiteName: self.suite)!
   }
 

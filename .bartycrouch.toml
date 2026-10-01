@@ -8,7 +8,7 @@ ignoreEmptyStrings = true
 unstripped = true
 
 [update.code]
-codePaths = ["./MonitorControl"]
+codePaths = ["./SwiftNativeBrightness"]
 localizablePaths = ["."]
 defaultToKeys = true
 additive = true
@@ -16,7 +16,7 @@ unstripped = true
 plistArguments = true
 
 [update.transform]
-codePaths = ["./MonitorControl"]
+codePaths = ["./SwiftNativeBrightness"]
 localizablePaths = ["."]
 transformer = "foundation"
 supportedLanguageEnumPath = "."

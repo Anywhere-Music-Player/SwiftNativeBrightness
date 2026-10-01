@@ -1,5 +1,5 @@
 // Adapted from Crisp. Copyright (c) 2026 Didrik Galteland.
-// Distributed under the MIT license; see MonitorControl/UI/Crisp-LICENSE.txt.
+// Distributed under the MIT license; see SwiftNativeBrightness/UI/Crisp-LICENSE.txt.
 
 import Foundation
 
@@ -7,7 +7,7 @@ import Foundation
 /// linkage or stored preference writes; CoreBrightness commits the system setting.
 final class NightShiftTemperatureClient: @unchecked Sendable {
   private let client: NSObject
-  private let queue = DispatchQueue(label: "me.guillaumeb.MonitorControl.nightShiftTemperature", qos: .userInitiated)
+  private let queue = DispatchQueue(label: "com.anywheremusicplayer.SwiftNativeBrightness.nightShiftTemperature", qos: .userInitiated)
   private let getSelector = NSSelectorFromString("getStrength:")
   private let setSelector = NSSelectorFromString("setStrength:commit:")
 

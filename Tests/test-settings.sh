@@ -1,11 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
-test_root="$(mktemp -d "${TMPDIR:-/tmp}/monitorcontrol-settings-tests.XXXXXX")"
+test_root="$(mktemp -d "${TMPDIR:-/tmp}/swiftnativebrightness-settings-tests.XXXXXX")"
 trap 'rm -rf "$test_root"' EXIT
 mkdir -p "$test_root/Sources/SettingsModel" "$test_root/Tests/SettingsModelTests"
-cp "$project_root/MonitorControl/View Controllers/Preferences/SettingsPreferences.swift" "$test_root/Sources/SettingsModel/"
-cp "$project_root/MonitorControl/Enums/PrefKey.swift" "$test_root/Sources/SettingsModel/"
+cp "$project_root/SwiftNativeBrightness/View Controllers/Preferences/SettingsPreferences.swift" "$test_root/Sources/SettingsModel/"
+cp "$project_root/SwiftNativeBrightness/Enums/PrefKey.swift" "$test_root/Sources/SettingsModel/"
 cp "$project_root/Tests/SettingsPreferencesTests.swift" "$test_root/Tests/SettingsModelTests/"
 cat > "$test_root/Package.swift" <<'PACKAGE'
 // swift-tools-version: 5.9

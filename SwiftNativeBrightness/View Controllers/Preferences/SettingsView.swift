@@ -274,7 +274,7 @@ private final class FlippedSettingsDocument: NSView {
 
 #if DEBUG
   private func previewPreferences() -> SettingsPreferences {
-    let defaults = UserDefaults(suiteName: "MonitorControl.SettingsPreview.\(UUID().uuidString)")!
+    let defaults = UserDefaults(suiteName: "SwiftNativeBrightness.SettingsPreview.\(UUID().uuidString)")!
     defaults.register(defaults: [
       PrefKey.showDisplayResolution.rawValue: true,
       PrefKey.showSystemControls.rawValue: true,
