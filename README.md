@@ -107,14 +107,14 @@ Notable exceptions for hardware control compatibility:
 
 ## Contributing
 
-[Report an issue](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/issues) or [open a pull request](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/pulls) targeting `dev/swiftnativebrightness`. Include your macOS version, display model, connection type and reproduction steps for display problems.
+[Report an issue](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/issues) or [open a pull request](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/pulls) targeting `main`. Include your macOS version, display model, connection type and reproduction steps for display problems.
 
 ## How to build
 
 Use Xcode with a macOS SDK supporting the macOS 14 deployment target. The project also uses [SwiftLint](https://github.com/realm/SwiftLint), [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) and [BartyCrouch](https://github.com/Flinesoft/BartyCrouch) for its build scripts.
 
 ```sh
-git clone --single-branch --branch dev/swiftnativebrightness https://github.com/Anywhere-Music-Player/SwiftNativeBrightness.git
+git clone https://github.com/Anywhere-Music-Player/SwiftNativeBrightness.git
 cd SwiftNativeBrightness
 open SwiftNativeBrightness.xcodeproj
 ```

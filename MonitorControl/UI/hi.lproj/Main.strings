@@ -26,7 +26,7 @@
 /* Class = "NSMenuItem"; title = "Show separate controls for each display in menu"; ObjectID = "3eO-bN-ZRl"; */
 "3eO-bN-ZRl.title" = "सूची में प्रत्येक प्रदर्शन के लिए अलग-अलग नियंत्रण दिखाएँ";
 
-/* Class = "NSButtonCell"; title = "https://monitorcontrol.app"; ObjectID = "42n-Zy-AqF"; Note = "#bc-ignore!"; */
+/* Class = "NSButtonCell"; title = "GitHub repository"; ObjectID = "42n-Zy-AqF"; Note = "#bc-ignore!"; */
 "42n-Zy-AqF.title" = "GitHub repository";
 
 /* Class = "NSMenuItem"; title = "Custom keyboard shortcuts"; ObjectID = "4CG-0I-anB"; */
