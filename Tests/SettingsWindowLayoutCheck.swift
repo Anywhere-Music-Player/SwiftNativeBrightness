@@ -99,12 +99,12 @@ struct SettingsWindowLayoutCheck {
     window.setContentSize(NSSize(width: 1100, height: 800))
     settle()
     checkViewport()
-    controller.toggleSidebar(nil)
+    precondition(!controller.splitViewItems[0].canCollapse, "Sidebar must remain visible")
+    precondition(window.toolbar?.items.contains(where: { $0.itemIdentifier == .toggleSidebar }) == false, "Unexpected sidebar toggle")
+    window.setContentSize(SettingsWindow.minimumContentSize)
     settle()
+    precondition(!controller.splitViewItems[0].isCollapsed, "Resizing hid the sidebar")
     checkViewport()
-    controller.toggleSidebar(nil)
-    settle()
-    checkViewport()
-    print("PASS: tiny frame recovery, ten page transitions without resizing, toolbar/sidebar safe areas, single Displays scroller, resize and sidebar collapse/expand.")
+    print("PASS: tiny frame recovery, ten page transitions without resizing, toolbar/sidebar safe areas, single Displays scroller, resize and persistent sidebar without toggle.")
   }
 }

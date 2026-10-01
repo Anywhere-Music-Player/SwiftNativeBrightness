@@ -30,6 +30,16 @@
 	<string>MIT Licensed. 2017.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUAutomaticallyUpdate</key>
+	<false/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUEnableJavaScript</key>
+	<false/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>6hzf2jTJi2SX94ojU7hM8HaK+5VGSX341oCkxj/MmwI=</string>
 	<key>UIDesignRequiresCompatibility</key>
 	<true/>
 </dict>

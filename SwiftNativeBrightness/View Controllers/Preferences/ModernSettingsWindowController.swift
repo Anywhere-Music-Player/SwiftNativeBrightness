@@ -41,7 +41,9 @@ final class ModernSettingsWindowController: NSWindowController {
         default: return .disabled
         }
       },
-      changeLoginStatus: { app.setStartAtLogin(enabled: $0) }
+      changeLoginStatus: { app.setStartAtLogin(enabled: $0) },
+      readAutomaticUpdateChecks: { app.updaterController.updater.automaticallyChecksForUpdates },
+      changeAutomaticUpdateChecks: { app.updaterController.updater.automaticallyChecksForUpdates = $0 }
     )
     self.preferences = preferences
     let root = SettingsSplitViewController(

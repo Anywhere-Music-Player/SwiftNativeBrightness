@@ -51,8 +51,8 @@ class MainPrefsViewController: NSViewController, SettingsPane {
 
   func populateSettings() {
     self.refreshStartAtLogin()
-    self.automaticUpdateCheck.state = .off
-    self.automaticUpdateCheck.isEnabled = false
+    self.automaticUpdateCheck.state = app.updaterController.updater.automaticallyChecksForUpdates ? .on : .off
+    self.automaticUpdateCheck.isEnabled = true
     self.combinedBrightness.state = prefs.bool(forKey: PrefKey.disableCombinedBrightness.rawValue) ? .off : .on
     self.allowZeroSwBrightness.state = prefs.bool(forKey: PrefKey.allowZeroSwBrightness.rawValue) ? .on : .off
     self.enableSmooth.state = prefs.bool(forKey: PrefKey.disableSmoothBrightness.rawValue) ? .off : .on
@@ -82,13 +82,7 @@ class MainPrefsViewController: NSViewController, SettingsPane {
   }
 
   @IBAction func automaticUpdateCheck(_ sender: NSButton) {
-    switch sender.state {
-    case .on:
-      prefs.set(true, forKey: PrefKey.SUEnableAutomaticChecks.rawValue)
-    case .off:
-      prefs.set(false, forKey: PrefKey.SUEnableAutomaticChecks.rawValue)
-    default: break
-    }
+    app.updaterController.updater.automaticallyChecksForUpdates = sender.state == .on
   }
 
   @IBAction func combinedBrightness(_ sender: NSButton) {

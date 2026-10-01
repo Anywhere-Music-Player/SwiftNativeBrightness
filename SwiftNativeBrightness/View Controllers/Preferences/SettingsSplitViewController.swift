@@ -69,7 +69,7 @@ final class SettingsSplitViewController: NSSplitViewController, NSToolbarDelegat
     sidebarItem.minimumThickness = 180
     sidebarItem.maximumThickness = 220
     sidebarItem.holdingPriority = .defaultHigh
-    sidebarItem.canCollapse = true
+    sidebarItem.canCollapse = false
     sidebarItem.canCollapseFromWindowResize = false
     sidebarItem.allowsFullHeightLayout = true
     let detailItem = NSSplitViewItem(viewController: self.detail)
@@ -125,7 +125,7 @@ final class SettingsSplitViewController: NSSplitViewController, NSToolbarDelegat
   }
 
   func toolbarDefaultItemIdentifiers(_: NSToolbar) -> [NSToolbarItem.Identifier] {
-    [.toggleSidebar, self.dividerIdentifier, self.titleIdentifier, .flexibleSpace]
+    [self.dividerIdentifier, self.titleIdentifier, .flexibleSpace]
   }
 
   func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {

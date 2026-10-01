@@ -801,7 +801,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L3UA46DS39;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -815,7 +815,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 26.10.0;
+				MARKETING_VERSION = 26.10.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.anywheremusicplayer.SwiftNativeBrightness;
 				PRODUCT_MODULE_NAME = SwiftNativeBrightness;
 				PRODUCT_NAME = SwiftNativeBrightness;
@@ -840,7 +840,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = L3UA46DS39;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -854,7 +854,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 26.10.0;
+				MARKETING_VERSION = 26.10.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.anywheremusicplayer.SwiftNativeBrightness;
 				PRODUCT_MODULE_NAME = SwiftNativeBrightness;
 				PRODUCT_NAME = SwiftNativeBrightness;

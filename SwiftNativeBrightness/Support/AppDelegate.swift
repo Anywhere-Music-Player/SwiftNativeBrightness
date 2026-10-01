@@ -7,6 +7,7 @@ import MediaKeyTap
 import os.log
 import ServiceManagement
 import SimplyCoreAudio
+import Sparkle
 
 class AppDelegate: NSObject, NSApplicationDelegate {
   let statusItem: NSStatusItem = {
@@ -28,6 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   var startupActionWriteCounter: Int = 0
   var audioPlayer: AVAudioPlayer?
 
+  private let updaterDelegate = UpdaterDelegate()
+  lazy var updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: self.updaterDelegate, userDriverDelegate: nil)
   lazy var settingsWindowController = ModernSettingsWindowController()
 
   func applicationDidFinishLaunching(_: Notification) {
@@ -41,17 +44,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     self.setPrefsBuildNumber()
     self.setDefaultPrefs()
+    self.updaterController.startUpdater()
     self.setMenu()
     CGDisplayRegisterReconfigurationCallback({ _, _, _ in app.displayReconfigured() }, nil)
     self.configure(firstrun: true)
     DisplayManager.shared.createGammaActivityEnforcer()
   }
 
-  // Use this project's releases until a signed update feed is available.
   static let projectURL = URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness")!
 
-  @objc func checkForUpdates(_: Any?) {
-    NSWorkspace.shared.open(Self.projectURL.appendingPathComponent("releases"))
+  @objc func checkForUpdates(_ sender: Any?) {
+    menu?.cancelTrackingWithoutAnimation()
+    RunLoop.main.perform(inModes: [.default]) {
+      guard self.updaterController.updater.canCheckForUpdates else { return }
+      NSApp.activate()
+      self.updaterController.checkForUpdates(sender)
+    }
   }
 
   @objc func quitClicked(_: AnyObject) {
@@ -133,7 +141,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   private func setPrefsBuildNumber() {
     let currentBuildNumber = Int(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "1") ?? 1
     let previousBuildNumber: Int = (Int(prefs.string(forKey: PrefKey.buildNumber.rawValue) ?? "0") ?? 0)
-    if self.safeMode || ((previousBuildNumber < MIN_PREVIOUS_BUILD_NUMBER) && previousBuildNumber > 0) || (previousBuildNumber > currentBuildNumber), let bundleID = Bundle.main.bundleIdentifier {
+    if self.safeMode || SettingsBuildCompatibility.shouldReset(previousBuild: previousBuildNumber, currentBuild: currentBuildNumber), let bundleID = Bundle.main.bundleIdentifier {
       if !self.safeMode {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString("Incompatible previous version", comment: "Shown in the alert dialog")
@@ -322,6 +330,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     app.updateStatusItemVisibility(true)
     self.setDefaultPrefs()
+    self.updaterController.updater.resetUpdateCycle()
     self.checkPermissions()
     self.updateMediaKeyTap()
     self.configure(firstrun: true)

@@ -20,7 +20,7 @@ SwiftNativeBrightness is a free, open-source macOS menu bar app for managing bui
 
 It is an independently maintained fork of [MonitorControl](https://github.com/MonitorControl/MonitorControl), with system appearance controls adapted from [Crisp](https://github.com/didriksg/Crisp). This also continues the idea behind my older [NativeDisplayBrightness](https://github.com/Anywhere-Music-Player/NativeDisplayBrightness) app.
 
-**Version 26.10.0 (build 1).** Download SwiftNativeBrightness from this repository's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases). MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app.
+**Version 26.10.1 (build 2).** Download SwiftNativeBrightness from this repository's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases). MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app.
 
 <p align="center">
   <img src=".github/screenshot.png" width="300" alt="SwiftNativeBrightness menu with display brightness sliders, system appearance controls and Night Shift temperature">
@@ -32,7 +32,7 @@ The screenshots were captured before the rename.
 
 Download the ZIP from [Releases](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases), extract it and copy **SwiftNativeBrightness.app** to Applications. You can also [build from source](#how-to-build).
 
-The 26.10.0 binary is signed with **Developer ID Application** and **notarized by Apple**, with the notarization ticket attached. If you downloaded the earlier ad-hoc signed ZIP, download it again from Releases and replace the old app.
+Release binaries are signed with **Developer ID Application** and **notarized by Apple**, with the notarization ticket attached. Version 26.10.0 needs one manual replacement to enable the updater added in 26.10.1.
 
 1. Open SwiftNativeBrightness and click its brightness icon in the menu bar.
 2. Move a display's brightness slider, or use your keyboard brightness keys.
@@ -40,7 +40,7 @@ The 26.10.0 binary is signed with **Developer ID Application** and **notarized b
 
 Native Apple brightness and media keys require **Accessibility** permission in **System Settings → Privacy & Security → Accessibility**. The renamed app has its own bundle identifier and preferences, so grant permission and enable launch at login for SwiftNativeBrightness separately. Run only one display-control app at a time to avoid conflicting adjustments.
 
-**Check for updates** opens this project's Releases page. Automatic updates are not configured; the app does not use MonitorControl's update feed or signing key.
+**Check for updates** checks this project's GitHub release feed using Sparkle and offers download and installation. Automatic checks can be disabled in Settings > General; installation stays under your control. Update archives are signed with this app's own Ed25519 key, in addition to Apple Developer ID signing and notarization. See [Publishing signed updates](Scripts/README.md) for the release workflow.
 
 ## Major features
 
@@ -66,7 +66,7 @@ Native Apple brightness and media keys require **Accessibility** permission in *
 - Support for custom keyboard shortcuts as well as standard brightness and media keys on Apple keyboards.
 - Dozens of customization options to tweak the inner workings of the app to suit your hardware and needs (don't forget to enable `Show advanced settings` in app Settings).
 - Simple, unobtrusive UI to blend in to the general aesthetics of macOS.
-- Resizable settings window with sidebar navigation and grouped General and Appearance controls.
+- Resizable settings window with a persistent sidebar and grouped General and Appearance controls.
 - Native menu sliders with optional current display resolution labels.
 - Launch at login directly through macOS Service Management, without a separate helper app.
 - System Dark Mode, Night Shift and True Tone share one option in Settings > Appearance. Night Shift temperature has a separate option. Both are enabled by default. Show percentages also controls the Night Shift temperature value.
@@ -90,7 +90,7 @@ DDC settings.
 
 ### macOS compatibility
 
-SwiftNativeBrightness requires macOS 14 or later. Version 26.10.0 starts at build 1. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
+SwiftNativeBrightness requires macOS 14 or later. Version 26.10.1 uses build 2. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
 
 Native macOS OSD behavior depends on the OS version. On Tahoe, the OSD percentage may not show or update.
 

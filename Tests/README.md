@@ -6,4 +6,8 @@ The seven tests cover live readback, unavailable values, rejected writes, value 
 
 Run settings preference tests with `./Tests/test-settings.sh`. These cover stored and inverted values, callback ordering, external changes, reset reads and launch-at-login status.
 
-Run native settings window checks with `./Tests/test-settings-window.sh`. These cover tiny saved window recovery, page changes without resizing, toolbar and sidebar safe areas, a single Displays scroller, resizing and sidebar collapse. Legacy content is represented by fixtures; these checks do not exercise physical displays.
+Run native settings window checks with `./Tests/test-settings-window.sh`. These cover tiny saved window recovery, page changes without resizing, toolbar and sidebar safe areas, a single Displays scroller, resizing and a persistent sidebar without a collapse button. Legacy content is represented by fixtures; these checks do not exercise physical displays.
+
+`./Tests/check-update-feed.sh appcast.xml update.zip` checks release metadata and verifies the archive with the app's public Ed25519 key. It also checks that modified archive data is rejected. It does not require access to the signing key.
+
+`./Tests/check-live-updates.sh /path/to/Sparkle.framework EXPECTED_BUILD` performs two real, information-only Sparkle checks against the configured GitHub feed from isolated fixture bundles: build 1 must discover the expected newer build, and the current build must report no update. It does not load the app's display controllers or install anything.

@@ -14,6 +14,8 @@ final class SettingsPreferences: ObservableObject {
   private let afterChange: (PrefKey) -> Void
   private let readLoginStatus: () -> LoginStatus
   private let changeLoginStatus: (Bool) -> Void
+  private let readAutomaticUpdateChecks: () -> Bool
+  private let changeAutomaticUpdateChecks: (Bool) -> Void
   private var defaultsObserver: AnyCancellable?
 
   @Published private(set) var loginStatus: LoginStatus = .disabled
@@ -23,13 +25,17 @@ final class SettingsPreferences: ObservableObject {
     beforeChange: @escaping (PrefKey) -> Void = { _ in },
     afterChange: @escaping (PrefKey) -> Void = { _ in },
     readLoginStatus: @escaping () -> LoginStatus = { .disabled },
-    changeLoginStatus: @escaping (Bool) -> Void = { _ in }
+    changeLoginStatus: @escaping (Bool) -> Void = { _ in },
+    readAutomaticUpdateChecks: @escaping () -> Bool = { false },
+    changeAutomaticUpdateChecks: @escaping (Bool) -> Void = { _ in }
   ) {
     self.defaults = defaults
     self.beforeChange = beforeChange
     self.afterChange = afterChange
     self.readLoginStatus = readLoginStatus
     self.changeLoginStatus = changeLoginStatus
+    self.readAutomaticUpdateChecks = readAutomaticUpdateChecks
+    self.changeAutomaticUpdateChecks = changeAutomaticUpdateChecks
     self.defaultsObserver = NotificationCenter.default.publisher(
       for: UserDefaults.didChangeNotification, object: defaults
     )
@@ -65,6 +71,18 @@ final class SettingsPreferences: ObservableObject {
     )
   }
 
+  var automaticUpdateChecks: Binding<Bool> {
+    Binding(
+      get: { self.readAutomaticUpdateChecks() },
+      set: { enabled in
+        guard self.readAutomaticUpdateChecks() != enabled else { return }
+        self.objectWillChange.send()
+        // Sparkle owns persistence and rescheduling through its public setter.
+        self.changeAutomaticUpdateChecks(enabled)
+      }
+    )
+  }
+
   var launchAtLogin: Binding<Bool> {
     Binding(
       get: { self.loginStatus == .enabled },
@@ -78,5 +96,12 @@ final class SettingsPreferences: ObservableObject {
 
   func refreshLoginStatus() {
     self.loginStatus = self.readLoginStatus()
+  }
+}
+
+/// This app starts at build 1 in its own preferences domain.
+enum SettingsBuildCompatibility {
+  static func shouldReset(previousBuild: Int, currentBuild: Int) -> Bool {
+    previousBuild > currentBuild
   }
 }
