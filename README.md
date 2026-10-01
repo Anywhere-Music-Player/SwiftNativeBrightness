@@ -32,7 +32,7 @@ The screenshots were captured before the rename.
 
 Download the ZIP from [Releases](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases), extract it and copy **SwiftNativeBrightness.app** to Applications. You can also [build from source](#how-to-build).
 
-The 26.10.0 binary is ad-hoc signed and is **not notarized by Apple**. macOS may block its first launch. If you trust this download, follow the message in **System Settings > Privacy & Security** to allow it.
+The 26.10.0 binary is signed with **Developer ID Application** and **notarized by Apple**, with the notarization ticket attached. If you downloaded the earlier ad-hoc signed ZIP, download it again from Releases and replace the old app.
 
 1. Open SwiftNativeBrightness and click its brightness icon in the menu bar.
 2. Move a display's brightness slider, or use your keyboard brightness keys.
