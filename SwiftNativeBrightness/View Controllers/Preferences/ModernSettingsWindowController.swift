@@ -28,7 +28,7 @@ final class ModernSettingsWindowController: NSWindowController {
             _ = display.setSwBrightness(1)
           }
           app.configure()
-        case .SUEnableAutomaticChecks, .disableSmoothBrightness, .enableBrightnessSync, .startupAction:
+        case .disableSmoothBrightness, .enableBrightnessSync, .startupAction:
           break
         default:
           app.updateMenusAndKeys()
@@ -41,9 +41,7 @@ final class ModernSettingsWindowController: NSWindowController {
         default: return .disabled
         }
       },
-      changeLoginStatus: { app.setStartAtLogin(enabled: $0) },
-      readAutomaticUpdateChecks: { app.updaterController.updater.automaticallyChecksForUpdates },
-      changeAutomaticUpdateChecks: { app.updaterController.updater.automaticallyChecksForUpdates = $0 }
+      changeLoginStatus: { app.setStartAtLogin(enabled: $0) }
     )
     self.preferences = preferences
     let root = SettingsSplitViewController(

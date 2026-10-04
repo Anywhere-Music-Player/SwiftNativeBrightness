@@ -14,8 +14,6 @@ final class SettingsPreferences: ObservableObject {
   private let afterChange: (PrefKey) -> Void
   private let readLoginStatus: () -> LoginStatus
   private let changeLoginStatus: (Bool) -> Void
-  private let readAutomaticUpdateChecks: () -> Bool
-  private let changeAutomaticUpdateChecks: (Bool) -> Void
   private var defaultsObserver: AnyCancellable?
   private var observedDefaults: NSDictionary
 
@@ -26,17 +24,13 @@ final class SettingsPreferences: ObservableObject {
     beforeChange: @escaping (PrefKey) -> Void = { _ in },
     afterChange: @escaping (PrefKey) -> Void = { _ in },
     readLoginStatus: @escaping () -> LoginStatus = { .disabled },
-    changeLoginStatus: @escaping (Bool) -> Void = { _ in },
-    readAutomaticUpdateChecks: @escaping () -> Bool = { false },
-    changeAutomaticUpdateChecks: @escaping (Bool) -> Void = { _ in }
+    changeLoginStatus: @escaping (Bool) -> Void = { _ in }
   ) {
     self.defaults = defaults
     self.beforeChange = beforeChange
     self.afterChange = afterChange
     self.readLoginStatus = readLoginStatus
     self.changeLoginStatus = changeLoginStatus
-    self.readAutomaticUpdateChecks = readAutomaticUpdateChecks
-    self.changeAutomaticUpdateChecks = changeAutomaticUpdateChecks
     self.observedDefaults = Self.settingsDefaults(in: defaults)
     self.defaultsObserver = NotificationCenter.default.publisher(
       for: UserDefaults.didChangeNotification, object: defaults
@@ -82,18 +76,6 @@ final class SettingsPreferences: ObservableObject {
         self.beforeChange(key)
         self.defaults.set(value, forKey: key.rawValue)
         self.afterChange(key)
-      }
-    )
-  }
-
-  var automaticUpdateChecks: Binding<Bool> {
-    Binding(
-      get: { self.readAutomaticUpdateChecks() },
-      set: { enabled in
-        guard self.readAutomaticUpdateChecks() != enabled else { return }
-        self.objectWillChange.send()
-        // Sparkle owns persistence and rescheduling through its public setter.
-        self.changeAutomaticUpdateChecks(enabled)
       }
     )
   }

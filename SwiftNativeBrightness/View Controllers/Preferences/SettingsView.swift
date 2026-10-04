@@ -100,7 +100,6 @@ struct GeneralSettingsView: View {
             .font(.callout)
             .foregroundStyle(.secondary)
         }
-        SettingsToggle("Automatically check for updates", description: "Check GitHub Releases for new versions. You choose when to install them.", isOn: self.preferences.automaticUpdateChecks)
         Link("Releases on GitHub", destination: URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases")!)
       }
 
@@ -278,7 +277,6 @@ private final class FlippedSettingsDocument: NSView {
       PrefKey.showSystemControls.rawValue: true,
       PrefKey.showNightShiftTemperature.rawValue: true,
       PrefKey.enableSliderPercent.rawValue: true,
-      PrefKey.SUEnableAutomaticChecks.rawValue: true,
     ])
     return SettingsPreferences(defaults: defaults)
   }

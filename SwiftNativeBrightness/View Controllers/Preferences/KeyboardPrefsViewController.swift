@@ -1,21 +1,8 @@
 //  Copyright © MonitorControl. @JoniVR, @theOneyouseek, @waydabber and others
 
 import Cocoa
-import ServiceManagement
-import Settings
 
-class KeyboardPrefsViewController: NSViewController, SettingsPane {
-  let paneIdentifier = Settings.PaneIdentifier.keyboard
-  let paneTitle: String = NSLocalizedString("Keyboard", comment: "Shown in the main prefs window")
-
-  var toolbarItemIcon: NSImage {
-    if !DEBUG_MACOS10, #available(macOS 11.0, *) {
-      return NSImage(systemSymbolName: "keyboard", accessibilityDescription: "Keyboard")!
-    } else {
-      return NSImage(named: NSImage.infoName)!
-    }
-  }
-
+class KeyboardPrefsViewController: NSViewController {
   @IBOutlet var customBrightnessUp: NSView!
   @IBOutlet var customBrightnessDown: NSView!
   @IBOutlet var customContrastUp: NSView!

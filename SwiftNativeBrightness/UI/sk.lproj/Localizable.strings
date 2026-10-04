@@ -115,9 +115,6 @@
 /* Shown in the Display Settings */
 "Software (shade, forced)" = "Softvér (tienenie, vynútené)";
 
-/* Sofware update deny consequences */
-"SoftwareUpdateDenyConsequences" = "Ak tieto pripojenia zakážete, nebudete informovaný o nových verziách a aktualizáciách zabezpečenia. Aktualizácie zabezpečenia sú dôležité na ochranu pred útokmi škodlivého softvéru.";
-
 /* Shown in the Display Settings */
 "This display allows for software brightness control via gamma table manipulation or shade as it does not support hardware control. Reasons for this might be using the HDMI port of a Mac mini (which blocks hardware DDC control) or having a blacklisted display." = "Tento displej umožňuje softvérové ovládanie jasu pomocou manipulácie s gama tabuľkami alebo tienením, pretože nepodporuje hardvérové ovládanie. Dôvodom môže byť použitie HDMI portu Mac mini (ktorý blokuje hardvérové ovládanie DDC) alebo použitie displeja z čiernej listiny.";
 

@@ -7,7 +7,6 @@ import MediaKeyTap
 import os.log
 import ServiceManagement
 import SimplyCoreAudio
-import Sparkle
 
 class AppDelegate: NSObject, NSApplicationDelegate {
   let statusItem: NSStatusItem = {
@@ -29,8 +28,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   var startupActionWriteCounter: Int = 0
   var audioPlayer: AVAudioPlayer?
 
-  private let updaterDelegate = UpdaterDelegate()
-  lazy var updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: self.updaterDelegate, userDriverDelegate: nil)
   lazy var settingsWindowController = ModernSettingsWindowController()
 
   func applicationDidFinishLaunching(_: Notification) {
@@ -44,7 +41,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     self.setPrefsBuildNumber()
     self.setDefaultPrefs()
-    self.updaterController.startUpdater()
     self.setMenu()
     CGDisplayRegisterReconfigurationCallback({ _, _, _ in app.displayReconfigured() }, nil)
     self.configure(firstrun: true)
@@ -53,12 +49,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   static let projectURL = URL(string: "https://github.com/Anywhere-Music-Player/SwiftNativeBrightness")!
 
-  @objc func checkForUpdates(_ sender: Any?) {
+  @objc func checkForUpdates(_: Any?) {
     menu?.cancelTrackingWithoutAnimation()
     RunLoop.main.perform(inModes: [.default]) {
-      guard self.updaterController.updater.canCheckForUpdates else { return }
-      NSApp.activate()
-      self.updaterController.checkForUpdates(sender)
+      NSWorkspace.shared.open(Self.projectURL.appendingPathComponent("releases"))
     }
   }
 
@@ -330,7 +324,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     app.updateStatusItemVisibility(true)
     self.setDefaultPrefs()
-    self.updaterController.updater.resetUpdateCycle()
     self.checkPermissions()
     self.updateMediaKeyTap()
     self.configure(firstrun: true)

@@ -2,20 +2,8 @@
 
 import Cocoa
 import os.log
-import Settings
 
-class DisplaysPrefsViewController: NSViewController, SettingsPane, NSTableViewDataSource, NSTableViewDelegate {
-  let paneIdentifier = Settings.PaneIdentifier.displays
-  let paneTitle: String = NSLocalizedString("Displays", comment: "Shown in the main prefs window")
-
-  var toolbarItemIcon: NSImage {
-    if !DEBUG_MACOS10, #available(macOS 11.0, *) {
-      return NSImage(systemSymbolName: "display.2", accessibilityDescription: "Displays")!
-    } else {
-      return NSImage(named: NSImage.infoName)!
-    }
-  }
-
+class DisplaysPrefsViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
   var displays: [Display] = []
 
   @IBOutlet var displayList: NSTableView!

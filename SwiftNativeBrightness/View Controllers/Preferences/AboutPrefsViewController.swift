@@ -1,21 +1,8 @@
 //  Copyright © MonitorControl. @JoniVR, @theOneyouseek, @waydabber and others
 
 import Cocoa
-import ServiceManagement
-import Settings
 
-class AboutPrefsViewController: NSViewController, SettingsPane {
-  let paneIdentifier = Settings.PaneIdentifier.about
-  let paneTitle: String = NSLocalizedString("About", comment: "Shown in the main prefs window")
-
-  var toolbarItemIcon: NSImage {
-    if !DEBUG_MACOS10, #available(macOS 11.0, *) {
-      return NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About")!
-    } else {
-      return NSImage(named: NSImage.infoName)!
-    }
-  }
-
+class AboutPrefsViewController: NSViewController {
   @IBOutlet var versionLabel: NSTextField!
   @IBOutlet var copyrightLabel: NSTextField!
 

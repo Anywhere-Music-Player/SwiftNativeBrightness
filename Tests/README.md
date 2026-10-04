@@ -10,6 +10,4 @@ Run `./Tests/test-settings-memory.sh` in a logged-in macOS session to exercise t
 
 Run native settings window checks with `./Tests/test-settings-window.sh`. These cover tiny saved window recovery, page changes without resizing, toolbar and sidebar safe areas, a single Displays scroller, resizing and a persistent sidebar without a collapse button. Legacy content is represented by fixtures; these checks do not exercise physical displays.
 
-`./Tests/check-update-feed.sh appcast.xml update.zip` checks release metadata and verifies the archive with the app's public Ed25519 key. It also checks that modified archive data is rejected. It does not require access to the signing key.
-
-`./Tests/check-live-updates.sh /path/to/Sparkle.framework EXPECTED_BUILD` performs two real, information-only Sparkle checks against the configured GitHub feed from isolated fixture bundles: build 1 must discover the expected newer build, and the current build must report no update. It does not load the app's display controllers or install anything.
+Release packaging checks the app's code signature, notarization ticket and Gatekeeper assessment before creating a ZIP and SHA-256 checksum. See [Publishing releases](../Scripts/README.md). Updates use the browser's GitHub Releases page and manual app replacement.

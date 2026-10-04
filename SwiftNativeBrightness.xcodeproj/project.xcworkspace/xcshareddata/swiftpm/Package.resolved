@@ -11,29 +11,11 @@
       }
     },
     {
-      "identity" : "settings",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sindresorhus/Settings",
-      "state" : {
-        "branch" : "main",
-        "revision" : "879ea83a7bbc6dbebf62bed8c547f090146372a6"
-      }
-    },
-    {
       "identity" : "simplycoreaudio",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rnine/SimplyCoreAudio",
       "state" : {
         "revision" : "75970285e2470f12a569cdff68ef5a75498a4646"
-      }
-    },
-    {
-      "identity" : "sparkle",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sparkle-project/Sparkle",
-      "state" : {
-        "branch" : "2.x",
-        "revision" : "9042c8dbd9c6f6a1bebc2e4c4b878eac6984ddbd"
       }
     },
     {

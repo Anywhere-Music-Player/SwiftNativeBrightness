@@ -20,7 +20,7 @@ SwiftNativeBrightness is a free, open-source macOS menu bar app for managing bui
 
 It is an independently maintained fork of [MonitorControl](https://github.com/MonitorControl/MonitorControl), with system appearance controls adapted from [Crisp](https://github.com/didriksg/Crisp). This also continues the idea behind my older [NativeDisplayBrightness](https://github.com/Anywhere-Music-Player/NativeDisplayBrightness) app.
 
-**Version 26.10.2 (build 3).** This release fixes memory growth caused by repeated Settings updates and enables signed in-app updates. Download SwiftNativeBrightness from this repository's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases). MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app.
+**Version 26.10.3 (build 4).** Includes a fix for memory growth caused by repeated Settings updates and removes unused dependencies. Published builds are available on this repository's [Releases page](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases). MonitorControl downloads and the `monitorcontrol` Homebrew cask install the upstream app.
 
 <p align="center">
   <img src=".github/screenshot.png" width="300" alt="SwiftNativeBrightness menu with display brightness sliders, system appearance controls and Night Shift temperature">
@@ -32,7 +32,7 @@ The screenshots were captured before the rename.
 
 Download the ZIP from [Releases](https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases), extract it and copy **SwiftNativeBrightness.app** to Applications. You can also [build from source](#how-to-build).
 
-Release binaries are signed with **Developer ID Application** and **notarized by Apple**, with the notarization ticket attached. Version 26.10.0 needs one manual replacement to enable the updater first published in 26.10.2.
+Release binaries are signed with **Developer ID Application** and **notarized by Apple**, with the notarization ticket attached. To update, quit SwiftNativeBrightness and replace the app in Applications with the version downloaded from Releases.
 
 1. Open SwiftNativeBrightness and click its brightness icon in the menu bar.
 2. Move a display's brightness slider, or use your keyboard brightness keys.
@@ -40,7 +40,7 @@ Release binaries are signed with **Developer ID Application** and **notarized by
 
 Native Apple brightness and media keys require **Accessibility** permission in **System Settings → Privacy & Security → Accessibility**. The renamed app has its own bundle identifier and preferences, so grant permission and enable launch at login for SwiftNativeBrightness separately. Run only one display-control app at a time to avoid conflicting adjustments.
 
-**Check for updates** checks this project's GitHub release feed using Sparkle and offers download and installation. Automatic checks can be disabled in Settings > General; installation stays under your control. Update archives are signed with this app's own Ed25519 key, in addition to Apple Developer ID signing and notarization. See [Publishing signed updates](Scripts/README.md) for the release workflow.
+**Check for updates** opens this project's GitHub Releases page in your browser. Updates are downloaded and installed manually. See [Publishing releases](Scripts/README.md) for the release workflow.
 
 ## Major features
 
@@ -90,7 +90,7 @@ DDC settings.
 
 ### macOS compatibility
 
-SwiftNativeBrightness requires macOS 14 or later. Version 26.10.2 uses build 3. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
+SwiftNativeBrightness requires macOS 14 or later. Version 26.10.3 uses build 4. For older macOS versions, see [upstream MonitorControl releases](https://github.com/MonitorControl/MonitorControl/releases).
 
 Native macOS OSD behavior depends on the OS version. On Tahoe, the OSD percentage may not show or update.
 
@@ -135,11 +135,11 @@ See [Tests/README.md](Tests/README.md) for requirements and coverage limits. The
 
 ### Third party dependencies
 
-- [MediaKeyTap](https://github.com/MonitorControl/MediaKeyTap)
-- [Settings](https://github.com/sindresorhus/Settings)
-- [SimplyCoreAudio](https://github.com/rnine/SimplyCoreAudio)
-- [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
-- [Sparkle](https://github.com/sparkle-project/Sparkle)
+- [MediaKeyTap](https://github.com/MonitorControl/MediaKeyTap) intercepts hardware brightness and volume keys.
+- [SimplyCoreAudio](https://github.com/rnine/SimplyCoreAudio) observes the current audio output and determines whether macOS or an external monitor should handle volume keys.
+- [Swift Atomics](https://github.com/apple/swift-atomics) is required by SimplyCoreAudio to manage its shared audio monitoring lifetime safely.
+
+Settings use the app's own AppKit/SwiftUI window. Custom shortcuts use the bundled implementation in `Support/KeyboardShortcuts.swift`, adapted from MonitorControl/BetterDisplay; they do not require a KeyboardShortcuts package. Update checks open GitHub Releases in the browser.
 
 ## Credits
 

@@ -129,22 +129,6 @@ final class SettingsPreferencesTests: XCTestCase {
     XCTAssertEqual(attempts, [true])
   }
 
-  func testUpdateToggleUsesUpdaterStateAndSetterWithoutDuplicatingDefaults() {
-    var enabled = true
-    var writes: [Bool] = []
-    let model = SettingsPreferences(defaults: self.defaults,
-                                    readAutomaticUpdateChecks: { enabled },
-                                    changeAutomaticUpdateChecks: { enabled = $0; writes.append($0) })
-    XCTAssertTrue(model.automaticUpdateChecks.wrappedValue)
-    model.automaticUpdateChecks.wrappedValue = false
-    model.automaticUpdateChecks.wrappedValue = false
-    XCTAssertFalse(model.automaticUpdateChecks.wrappedValue)
-    XCTAssertEqual(writes, [false])
-    XCTAssertNil(self.defaults.object(forKey: PrefKey.SUEnableAutomaticChecks.rawValue))
-    enabled = true
-    XCTAssertTrue(model.automaticUpdateChecks.wrappedValue)
-  }
-
   func testIndependentBuildNumbersPreserveSettingsOnLaunchAndUpgrade() {
     XCTAssertFalse(SettingsBuildCompatibility.shouldReset(previousBuild: 0, currentBuild: 1))
     XCTAssertFalse(SettingsBuildCompatibility.shouldReset(previousBuild: 1, currentBuild: 1))

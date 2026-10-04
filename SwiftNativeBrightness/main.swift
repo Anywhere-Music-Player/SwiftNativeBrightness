@@ -21,9 +21,7 @@ private let isRunningForPreviews = ProcessInfo.processInfo.environment["XCODE_RU
 
 // Views
 private let storyboard = isRunningForPreviews ? nil : NSStoryboard(name: "Main", bundle: Bundle.main)
-let mainPrefsVc = storyboard?.instantiateController(withIdentifier: "MainPrefsVC") as? MainPrefsViewController
 let displaysPrefsVc = storyboard?.instantiateController(withIdentifier: "DisplaysPrefsVC") as? DisplaysPrefsViewController
-let menuslidersPrefsVc = storyboard?.instantiateController(withIdentifier: "MenuslidersPrefsVC") as? MenuslidersPrefsViewController
 let keyboardPrefsVc = storyboard?.instantiateController(withIdentifier: "KeyboardPrefsVC") as? KeyboardPrefsViewController
 let aboutPrefsVc = storyboard?.instantiateController(withIdentifier: "AboutPrefsVC") as? AboutPrefsViewController
 let onboardingVc = storyboard?.instantiateController(withIdentifier: "onboardingViewController") as? NSWindowController
