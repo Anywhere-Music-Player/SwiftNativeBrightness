@@ -17,6 +17,7 @@ final class SettingsPreferences: ObservableObject {
   private let readAutomaticUpdateChecks: () -> Bool
   private let changeAutomaticUpdateChecks: (Bool) -> Void
   private var defaultsObserver: AnyCancellable?
+  private var observedDefaults: NSDictionary
 
   @Published private(set) var loginStatus: LoginStatus = .disabled
 
@@ -36,12 +37,26 @@ final class SettingsPreferences: ObservableObject {
     self.changeLoginStatus = changeLoginStatus
     self.readAutomaticUpdateChecks = readAutomaticUpdateChecks
     self.changeAutomaticUpdateChecks = changeAutomaticUpdateChecks
+    self.observedDefaults = Self.settingsDefaults(in: defaults)
     self.defaultsObserver = NotificationCenter.default.publisher(
       for: UserDefaults.didChangeNotification, object: defaults
     )
     .receive(on: RunLoop.main)
-    .sink { [weak self] _ in self?.objectWillChange.send() }
+    .sink { [weak self] _ in self?.defaultsDidChange() }
     self.refreshLoginStatus()
+  }
+
+  private static func settingsDefaults(in defaults: UserDefaults) -> NSDictionary {
+    // Settings use bare PrefKey names. Display telemetry has a display suffix,
+    // e.g. value16(Display@1), and must not invalidate the hosted SwiftUI forms.
+    defaults.dictionaryRepresentation().filter { PrefKey(rawValue: $0.key) != nil } as NSDictionary
+  }
+
+  private func defaultsDidChange() {
+    let values = Self.settingsDefaults(in: self.defaults)
+    guard values != self.observedDefaults else { return }
+    self.observedDefaults = values
+    self.objectWillChange.send()
   }
 
   func boolean(_ key: PrefKey, inverted: Bool = false) -> Binding<Bool> {

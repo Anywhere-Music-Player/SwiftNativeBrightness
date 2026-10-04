@@ -2,7 +2,7 @@
 
 The app reads `https://github.com/Anywhere-Music-Player/SwiftNativeBrightness/releases/latest/download/appcast.xml`. Each published latest release must include that file and its matching ZIP. Sparkle follows the feed's version-specific GitHub download URL, verifies the Ed25519 signature and the app's code signature, and offers installation. Never reuse or reset `CURRENT_PROJECT_VERSION`; Sparkle compares build numbers.
 
-The first release with the updater is 26.10.1 (build 2). Version 26.10.0 needs one manual replacement because it has no active updater.
+The first published release with the updater is 26.10.2 (build 3); the 26.10.1 implementation was not published separately. Version 26.10.0 needs one manual replacement because it has no active updater.
 
 ## Sign and notarize
 

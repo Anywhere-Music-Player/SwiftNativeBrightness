@@ -4,7 +4,9 @@ Run `./Tests/test-night-shift.sh` from the repository root on macOS 14 or later 
 
 The seven tests cover live readback, unavailable values, rejected writes, value clamping, stale reads, dragging and coalescing slow writes. These are controller tests; they do not verify private CoreBrightness APIs, physical displays or the appearance of the app menu.
 
-Run settings preference tests with `./Tests/test-settings.sh`. These cover stored and inverted values, callback ordering, external changes, reset reads and launch-at-login status.
+Run settings preference tests with `./Tests/test-settings.sh`. These cover stored and inverted values, callback ordering, external changes, reset reads and launch-at-login status. Regression checks require per-display telemetry and unchanged notifications to leave Settings untouched, while real settings changes and resets still notify the UI.
+
+Run `./Tests/test-settings-memory.sh` in a logged-in macOS session to exercise the actual settings window with an isolated preferences suite. It briefly shows a test window behind other windows, warms the UI, then performs 3,000 per-display brightness writes (about one minute). It requires zero Settings invalidations and less than 4 MiB additional allocation across malloc zones after warmup. The original code reproduced 3,000 invalidations and about 12.5 MiB growth on macOS 27.0.1, with the same Observation tracking types dominating the live app's heap. This measures the polling-triggered accumulation; it does not exercise physical displays or prove the absence of every SwiftUI/framework leak. The test closes its window and removes its isolated preferences on completion.
 
 Run native settings window checks with `./Tests/test-settings-window.sh`. These cover tiny saved window recovery, page changes without resizing, toolbar and sidebar safe areas, a single Displays scroller, resizing and a persistent sidebar without a collapse button. Legacy content is represented by fixtures; these checks do not exercise physical displays.
 

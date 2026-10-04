@@ -61,9 +61,46 @@ final class SettingsPreferencesTests: XCTestCase {
   func testExternalPreferenceChangeNotifiesTheVisiblePage() {
     let model = SettingsPreferences(defaults: self.defaults)
     let changed = self.expectation(description: "Settings update after external preference change")
-    let observation = model.objectWillChange.sink { changed.fulfill() }
+    let observation = model.objectWillChange.prefix(1).sink { changed.fulfill() }
     self.defaults.set(true, forKey: PrefKey.enableSliderPercent.rawValue)
     self.wait(for: [changed], timeout: 2)
+    withExtendedLifetime(observation) {}
+  }
+
+  func testDisplayPollingDoesNotInvalidateSettings() {
+    let model = SettingsPreferences(defaults: self.defaults)
+    _ = model.boolean(.enableSliderPercent)
+    let changed = self.expectation(description: "Display telemetry must not redraw Settings")
+    changed.isInverted = true
+    let observation = model.objectWillChange.prefix(1).sink { changed.fulfill() }
+    for value in 0 ..< 20 {
+      self.defaults.set(Float(value) / 20, forKey: "value16(TestDisplay@1)")
+      self.defaults.set(Float(value) / 20, forKey: "SwBrightness(TestDisplay@1)")
+    }
+    self.wait(for: [changed], timeout: 0.2)
+    withExtendedLifetime(observation) {}
+  }
+
+  func testUnchangedPreferenceNotificationDoesNotInvalidateSettings() {
+    let model = SettingsPreferences(defaults: self.defaults)
+    _ = model.boolean(.enableSliderPercent)
+    let changed = self.expectation(description: "Unchanged settings must not redraw")
+    changed.isInverted = true
+    let observation = model.objectWillChange.prefix(1).sink { changed.fulfill() }
+    NotificationCenter.default.post(name: UserDefaults.didChangeNotification, object: self.defaults)
+    self.wait(for: [changed], timeout: 0.2)
+    withExtendedLifetime(observation) {}
+  }
+
+  func testExternalResetStillNotifiesAndRestoresRegisteredDefaults() {
+    self.defaults.register(defaults: [PrefKey.showSystemControls.rawValue: true])
+    self.defaults.set(false, forKey: PrefKey.showSystemControls.rawValue)
+    let model = SettingsPreferences(defaults: self.defaults)
+    let changed = self.expectation(description: "Reset must redraw Settings")
+    let observation = model.objectWillChange.prefix(1).sink { changed.fulfill() }
+    self.defaults.removePersistentDomain(forName: self.suite)
+    self.wait(for: [changed], timeout: 2)
+    XCTAssertTrue(model.boolean(.showSystemControls).wrappedValue)
     withExtendedLifetime(observation) {}
   }
 
