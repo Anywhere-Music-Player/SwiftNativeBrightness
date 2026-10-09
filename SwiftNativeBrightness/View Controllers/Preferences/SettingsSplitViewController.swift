@@ -88,6 +88,8 @@ final class SettingsSplitViewController: NSSplitViewController, NSToolbarDelegat
       self.detail.show(self.host(GeneralSettingsView(preferences: self.preferences, resetSettings: self.resetSettings)))
     case .appearance:
       self.detail.show(self.host(AppearanceSettingsView(preferences: self.preferences, quitApplication: self.quitApplication)))
+    case .diagnostics:
+      self.detail.show(self.host(DiagnosticsSettingsView()))
     case .keyboard, .about:
       if let controller = self.legacyController(page) {
         self.detail.show(LegacySettingsContainer(content: controller))

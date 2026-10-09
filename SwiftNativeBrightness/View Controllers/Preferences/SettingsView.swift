@@ -3,7 +3,7 @@
 import SwiftUI
 
 enum SettingsPage: String, CaseIterable, Identifiable {
-  case general, appearance, keyboard, displays, about
+  case general, appearance, keyboard, displays, diagnostics, about
 
   var id: String { self.rawValue }
 
@@ -13,6 +13,7 @@ enum SettingsPage: String, CaseIterable, Identifiable {
     case .appearance: return NSLocalizedString("Appearance", comment: "Settings sidebar")
     case .keyboard: return NSLocalizedString("Keyboard", comment: "Settings sidebar")
     case .displays: return NSLocalizedString("Displays", comment: "Settings sidebar")
+    case .diagnostics: return NSLocalizedString("Diagnostics", comment: "Settings sidebar")
     case .about: return NSLocalizedString("About", comment: "Settings sidebar")
     }
   }
@@ -23,6 +24,7 @@ enum SettingsPage: String, CaseIterable, Identifiable {
     case .appearance: return "paintpalette"
     case .keyboard: return "keyboard"
     case .displays: return "display.2"
+    case .diagnostics: return "list.bullet.rectangle"
     case .about: return "info.circle"
     }
   }

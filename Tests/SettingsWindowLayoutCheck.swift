@@ -105,6 +105,6 @@ struct SettingsWindowLayoutCheck {
     settle()
     precondition(!controller.splitViewItems[0].isCollapsed, "Resizing hid the sidebar")
     checkViewport()
-    print("PASS: tiny frame recovery, ten page transitions without resizing, toolbar/sidebar safe areas, single Displays scroller, resize and persistent sidebar without toggle.")
+    print("PASS: tiny frame recovery, \(SettingsPage.allCases.count * 2) page transitions without resizing, toolbar/sidebar safe areas, single Displays scroller, resize and persistent sidebar without toggle.")
   }
 }

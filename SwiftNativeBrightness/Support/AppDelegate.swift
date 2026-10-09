@@ -32,6 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_: Notification) {
     app = self
+    DiagnosticLog.shared.record("App started version=\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown")")
     self.subscribeEventListeners()
     self.showSafeModeAlertIfNeeded()
     if !prefs.bool(forKey: PrefKey.appAlreadyLaunched.rawValue) {
@@ -128,6 +129,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationWillTerminate(_: Notification) {
     os_log("Goodbye!", type: .info)
+    DiagnosticLog.shared.record("App stopped")
+    DiagnosticLog.shared.flush()
     DisplayManager.shared.resetSwBrightnessForAllDisplays(noPrefSave: true)
     self.updateStatusItemVisibility(true)
   }

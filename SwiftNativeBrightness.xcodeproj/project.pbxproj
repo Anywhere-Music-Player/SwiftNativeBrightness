@@ -50,6 +50,9 @@
 		F03A8DF21FFBAA6F0034DC27 /* OtherDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03A8DF11FFBAA6F0034DC27 /* OtherDisplay.swift */; };
 		F0A489C4279C71B200BEDFD6 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A489C3279C71B200BEDFD6 /* OnboardingViewController.swift */; };
 		FE4E0896249D584C003A50BB /* OSDUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4E0895249D584C003A50BB /* OSDUtils.swift */; };
+		DDC020090000000000000001 /* DDCCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC010090000000000000001 /* DDCCommunication.swift */; };
+		DDC020090000000000000002 /* DiagnosticLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC010090000000000000002 /* DiagnosticLog.swift */; };
+		DDC020090000000000000003 /* DiagnosticsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC010090000000000000003 /* DiagnosticsSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +145,9 @@
 		FB5DB28E2AD54C4600306223 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Main.strings"; sourceTree = "<group>"; };
 		FB5DB2902AD54C4600306223 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FE4E0895249D584C003A50BB /* OSDUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSDUtils.swift; sourceTree = "<group>"; };
+		DDC010090000000000000001 /* DDCCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDCCommunication.swift; sourceTree = "<group>"; };
+		DDC010090000000000000002 /* DiagnosticLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLog.swift; sourceTree = "<group>"; };
+		DDC010090000000000000003 /* DiagnosticsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +268,8 @@
 				CB0D15010000000000000002 /* KeyboardShortcuts.swift */,
 				AA44E70627038F7F00E06865 /* KeyboardShortcutsManager.swift */,
 				AA16139A26BE772E00DCF027 /* Arm64DDC.swift */,
+				DDC010090000000000000002 /* DiagnosticLog.swift */,
+				DDC010090000000000000001 /* DDCCommunication.swift */,
 				AA4398A826DD55DA00943F16 /* IntelDDC.swift */,
 				FE4E0895249D584C003A50BB /* OSDUtils.swift */,
 				2D5C19EC3059864D0019FDA8 /* NightShiftTemperatureClient.swift */,
@@ -301,6 +309,7 @@
 				AA665A5C26C5892800FEF2C1 /* AboutPrefsViewController.swift */,
 				2DC67DB83059CE1300FD385A /* SettingsPreferences.swift */,
 				2DC67DBA3059CE7400FD385A /* SettingsView.swift */,
+				DDC010090000000000000003 /* DiagnosticsSettingsView.swift */,
 				2DC67DBC3059CEA900FD385A /* ModernSettingsWindowController.swift */,
 				2DC67DBE3059D5CC00FD385A /* SettingsSplitViewController.swift */,
 			);
@@ -478,6 +487,9 @@
 				AA44E7052703790100E06865 /* KeyboardShortcuts+Extension.swift in Sources */,
 				F0A489C4279C71B200BEDFD6 /* OnboardingViewController.swift in Sources */,
 				AA16139B26BE772E00DCF027 /* Arm64DDC.swift in Sources */,
+				DDC020090000000000000003 /* DiagnosticsSettingsView.swift in Sources */,
+				DDC020090000000000000002 /* DiagnosticLog.swift in Sources */,
+				DDC020090000000000000001 /* DDCCommunication.swift in Sources */,
 				28D1DDF2227FBE71004CB494 /* NSScreen+Extension.swift in Sources */,
 				2D5C19EF305986500019FDA8 /* NightShiftTemperatureController.swift in Sources */,
 				AA99521726FE25AB00612E07 /* AppDelegate.swift in Sources */,

@@ -91,6 +91,7 @@ class OtherDisplay: Display {
   func setupCurrentAndMaxValues(command: Command, firstrun: Bool = false) {
     var ddcValues: (UInt16, UInt16)?
     var maxDDCValue = UInt16(DDC_MAX_DETECT_LIMIT)
+    let previousMaximum = self.readPrefAsInt(key: .maxDDC, for: command)
     var currentDDCValue: UInt16
     switch command {
     case .audioSpeakerVolume: currentDDCValue = UInt16(Float(DDC_MAX_DETECT_LIMIT) * 0.125)
@@ -106,9 +107,12 @@ class OtherDisplay: Display {
         os_log("- Reading DDC from display %{public}@ times", type: .info, String(self.pollingCount))
         let delay = self.readPrefAsBool(key: .longerDelay) ? UInt64(40 * kMillisecondScale) : nil
         ddcValues = self.readDDCValues(for: command, tries: UInt(self.pollingCount), minReplyDelay: delay)
+        if let values = ddcValues, values.1 == 0 || values.0 > values.1 {
+          DiagnosticLog.shared.record("\(self.name) \(command): rejected range current=\(values.0) max=\(values.1)")
+          ddcValues = nil
+        }
         if ddcValues != nil {
           (currentDDCValue, maxDDCValue) = ddcValues ?? (currentDDCValue, maxDDCValue)
-          self.processCurrentDDCValue(isReadFromDisplay: true, command: command, firstrun: firstrun, currentDDCValue: currentDDCValue)
           os_log("- DDC read successful.", type: .info)
         } else {
           os_log("- DDC read failed.", type: .info)
@@ -116,12 +120,17 @@ class OtherDisplay: Display {
       } else {
         os_log("- DDC read disabled.", type: .info)
       }
-      if self.readPrefAsInt(key: .maxDDCOverride, for: command) > self.readPrefAsInt(key: .minDDCOverride, for: command) {
-        self.savePref(self.readPrefAsInt(key: .maxDDCOverride, for: command), key: .maxDDC, for: command)
+      let maximum = DDCValueRange.resolvedMaximum(
+        reported: ddcValues?.1,
+        override: self.readPrefAsInt(key: .maxDDCOverride, for: command),
+        minimum: self.readPrefAsInt(key: .minDDCOverride, for: command),
+        previous: previousMaximum
+      )
+      // Normalize only after installing the newly read range, never with a stale maximum.
+      self.savePref(maximum, key: .maxDDC, for: command)
+      if ddcValues != nil {
+        self.processCurrentDDCValue(isReadFromDisplay: true, command: command, firstrun: firstrun, currentDDCValue: currentDDCValue)
       } else {
-        self.savePref(min(Int(maxDDCValue), DDC_MAX_DETECT_LIMIT), key: .maxDDC, for: command)
-      }
-      if ddcValues == nil {
         self.processCurrentDDCValue(isReadFromDisplay: false, command: command, firstrun: firstrun, currentDDCValue: currentDDCValue)
         currentDDCValue = self.getDDCValueFromPrefs(command)
       }
@@ -130,6 +139,7 @@ class OtherDisplay: Display {
       os_log("- Maximum DDC value: %{public}@ (overrides %{public}@)", type: .info, String(self.readPrefAsInt(key: .maxDDC, for: command)), String(maxDDCValue))
       os_log("- Current internal value: %{public}@", type: .info, String(self.readPrefAsFloat(for: command)))
       os_log("- Command status: %{public}@", type: .info, self.readPrefAsBool(key: .isTouched, for: command) ? "Touched" : "Untouched")
+      DiagnosticLog.shared.record("\(self.name) \(command): setup source=\(ddcValues == nil ? "saved/fallback" : "display") raw=\(currentDDCValue) range=\(self.readPrefAsInt(key: .minDDCOverride, for: command))...\(maximum) value=\(self.readPrefAsFloat(for: command)) previousMax=\(previousMaximum)")
       if command == .audioSpeakerVolume {
         self.setupMuteUnMute()
       }
@@ -178,6 +188,7 @@ class OtherDisplay: Display {
     } else if self.readPrefAsInt(for: .audioMuteScreenBlank) != 1, volumeOSDValue == 0 {
       muteValue = 1
     }
+    DiagnosticLog.shared.record("\(self.name) volume key=\(isUp ? "up" : "down") cached=\(currentValue) requested=\(volumeOSDValue) raw=\(self.convValueToDDC(for: .audioSpeakerVolume, from: volumeOSDValue)) max=\(self.readPrefAsInt(key: .maxDDC, for: .audioSpeakerVolume))")
     let isAlreadySet = volumeOSDValue == self.readPrefAsFloat(for: .audioSpeakerVolume)
     if !isAlreadySet {
       if let muteValue = muteValue, self.readPrefAsBool(key: .enableMuteUnmute) {
@@ -379,6 +390,9 @@ class OtherDisplay: Display {
 
   func writeDDCValues(command: Command, value: UInt16) {
     guard app.sleepID == 0, app.reconfigureID == 0, !self.readPrefAsBool(key: .forceSw), !self.readPrefAsBool(key: .unavailableDDC, for: command) else {
+      if command == .audioSpeakerVolume || command == .audioMuteScreenBlank {
+        DiagnosticLog.shared.record("\(self.name) \(command): write skipped sleep=\(app.sleepID) reconfigure=\(app.reconfigureID) software=\(self.readPrefAsBool(key: .forceSw)) unavailable=\(self.readPrefAsBool(key: .unavailableDDC, for: command))")
+      }
       return
     }
     self.writeDDCQueue.async(flags: .barrier) {
@@ -399,21 +413,27 @@ class OtherDisplay: Display {
     guard value != UInt16.max, value != lastValue else {
       return
     }
-    self.writeDDCQueue.async(flags: .barrier) {
-      self.writeDDCLastSavedValue[command] = value
-      self.savePref(true, key: PrefKey.isTouched, for: command)
-    }
     var controlCodes = self.getRemapControlCodes(command: command)
     if controlCodes.count == 0 {
       controlCodes.append(command.rawValue)
     }
+    var allSucceeded = true
     for controlCode in controlCodes {
+      let succeeded: Bool
       if Arm64DDC.isArm64 {
-        if self.arm64ddc {
-          _ = Arm64DDC.write(service: self.arm64avService, command: controlCode, value: value)
-        }
+        succeeded = self.arm64ddc && Arm64DDC.write(service: self.arm64avService, command: controlCode, value: value)
       } else {
-        _ = self.ddc?.write(command: controlCode, value: value, errorRecoveryWaitTime: 2000) ?? false
+        succeeded = self.ddc?.write(command: controlCode, value: value, errorRecoveryWaitTime: 2000) ?? false
+      }
+      allSucceeded = allSucceeded && succeeded
+      if command == .audioSpeakerVolume || command == .audioMuteScreenBlank || !succeeded {
+        DiagnosticLog.shared.record("\(self.name) DDC write code=\(String(format: "%02X", controlCode)) raw=\(value) transport=\(succeeded ? "ok" : "failed")")
+      }
+    }
+    if allSucceeded {
+      self.writeDDCQueue.async(flags: .barrier) {
+        self.writeDDCLastSavedValue[command] = value
+        self.savePref(true, key: PrefKey.isTouched, for: command)
       }
     }
   }
@@ -441,6 +461,7 @@ class OtherDisplay: Display {
         values = self.ddc?.read(command: controlCode, tries: tries, minReplyDelay: delay)
       }
     }
+    DiagnosticLog.shared.record("\(self.name) DDC read code=\(String(format: "%02X", controlCode)) \(values.map { "current=\($0.0) max=\($0.1)" } ?? "failed")")
     return values
   }
 
@@ -485,11 +506,9 @@ class OtherDisplay: Display {
       value = 1 - value
     }
     let curveMultiplier = self.getCurveMultiplier(self.readPrefAsInt(key: .curveDDC, for: command))
-    let minDDCValue = Float(self.readPrefAsInt(key: .minDDCOverride, for: command))
-    let maxDDCValue = Float(self.readPrefAsInt(key: .maxDDC, for: command))
+    let range = DDCValueRange(minimum: self.readPrefAsInt(key: .minDDCOverride, for: command), maximum: self.readPrefAsInt(key: .maxDDC, for: command))
     let curvedValue = pow(max(min(value, 1), 0), curveMultiplier)
-    let deNormalizedValue = (maxDDCValue - minDDCValue) * curvedValue + minDDCValue
-    var intDDCValue = UInt16(min(max(deNormalizedValue.rounded(), minDDCValue), maxDDCValue))
+    var intDDCValue = range.denormalize(curvedValue)
     if from > 0, command == Command.audioSpeakerVolume {
       intDDCValue = max(1, intDDCValue) // Never let sound to mute accidentally, keep it digitally to at digital 1 if needed as muting breaks some displays
     }
@@ -498,9 +517,8 @@ class OtherDisplay: Display {
 
   func convDDCToValue(for command: Command, from: UInt16) -> Float {
     let curveMultiplier = self.getCurveMultiplier(self.readPrefAsInt(key: .curveDDC, for: command))
-    let minDDCValue = Float(self.readPrefAsInt(key: .minDDCOverride, for: command))
-    let maxDDCValue = Float(self.readPrefAsInt(key: .maxDDC, for: command))
-    let normalizedValue = ((min(max(Float(from), minDDCValue), maxDDCValue) - minDDCValue) / (maxDDCValue - minDDCValue))
+    let range = DDCValueRange(minimum: self.readPrefAsInt(key: .minDDCOverride, for: command), maximum: self.readPrefAsInt(key: .maxDDC, for: command))
+    let normalizedValue = range.normalize(from)
     let deCurvedValue = pow(normalizedValue, 1.0 / curveMultiplier)
     var value = deCurvedValue
     if self.readPrefAsBool(key: .invertDDC, for: command) {
