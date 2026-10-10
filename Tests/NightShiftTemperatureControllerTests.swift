@@ -6,6 +6,32 @@ import XCTest
 
 final class NightShiftTemperatureControllerTests: XCTestCase {
   @MainActor
+  func testDiagnosticsLogReadbackAndDragBoundariesWithoutPollingNoise() async {
+    let backend = TemperatureBackend()
+    let recorder = LogRecorder()
+    let controller = NightShiftTemperatureController(read: { await backend.read() },
+                                                     write: { await backend.write($0) },
+                                                     log: { recorder.append($0) })
+    for _ in 0 ..< 10 {
+      await controller.refresh()
+    }
+    controller.setEditing(true)
+    for step in 4 ... 8 {
+      await controller.setStrength(Double(step) / 10)
+    }
+    controller.setEditing(false)
+    for _ in 0 ..< 10 {
+      await controller.refresh()
+    }
+    XCTAssertEqual(recorder.snapshot(), [
+      "Night Shift read strength=30%",
+      "Night Shift drag began strength=30%",
+      "Night Shift drag ended strength=80%",
+      "Night Shift read strength=80%",
+    ])
+  }
+
+  @MainActor
   func testRefreshFollowsSystemChangesWithoutWriting() async {
     let backend = TemperatureBackend()
     let controller = self.makeController(backend)
@@ -112,6 +138,22 @@ final class NightShiftTemperatureControllerTests: XCTestCase {
       }
       await Task.yield()
     }
+  }
+}
+
+private final class LogRecorder: @unchecked Sendable {
+  private let lock = NSLock()
+  private var lines: [String] = []
+  func append(_ line: String) {
+    self.lock.lock()
+    defer { self.lock.unlock() }
+    self.lines.append(line)
+  }
+
+  func snapshot() -> [String] {
+    self.lock.lock()
+    defer { self.lock.unlock() }
+    return self.lines
   }
 }
 

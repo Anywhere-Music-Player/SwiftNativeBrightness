@@ -37,15 +37,14 @@ struct NightShiftTemperatureView: View {
           .monospacedDigit()
           .foregroundColor(.secondary)
       }
-      Slider(value: Binding(
-        get: { self.temperature.strength ?? 0 },
-        set: { value in Task { await self.temperature.setStrength(value) } }
-      ), in: 0 ... 1) { editing in
+      NightShiftMenuSlider(value: self.temperature.strength ?? 0,
+                           isEnabled: self.isEnabled && self.temperature.strength != nil,
+                           onChange: { value in Task { await self.temperature.setStrength(value) } })
+      { editing in
         self.temperature.setEditing(editing)
         if !editing { Task { await self.temperature.refresh() } }
       }
-      .controlSize(.small)
-      .accessibilityLabel(Text("Night Shift Temperature"))
+      .frame(height: 16)
       HStack {
         Text("Less Warm")
         Spacer()
@@ -57,6 +56,55 @@ struct NightShiftTemperatureView: View {
     .disabled(!self.isEnabled || self.temperature.strength == nil)
     .padding(.horizontal, 12)
     .padding(.vertical, 8)
+  }
+}
+
+/// Use AppKit tracking inside NSMenu, as the display sliders do. SwiftUI's
+/// Slider can retain a cancelled drag after the menu closes and ignore later drags.
+private struct NightShiftMenuSlider: NSViewRepresentable {
+  let value: Double
+  let isEnabled: Bool
+  let onChange: (Double) -> Void
+  let onEditingChanged: (Bool) -> Void
+
+  func makeNSView(context _: Context) -> Control {
+    let control = Control()
+    control.minValue = 0
+    control.maxValue = 1
+    control.isContinuous = true
+    control.controlSize = .small
+    control.target = control
+    control.action = #selector(Control.valueChanged)
+    control.setAccessibilityLabel(NSLocalizedString("Night Shift Temperature", comment: ""))
+    return control
+  }
+
+  func updateNSView(_ control: Control, context _: Context) {
+    control.onChange = self.onChange
+    control.onEditingChanged = self.onEditingChanged
+    control.isEnabled = self.isEnabled
+    if !control.isTracking { control.doubleValue = self.value }
+  }
+
+  final class Control: NSSlider {
+    var onChange: ((Double) -> Void)?
+    var onEditingChanged: ((Bool) -> Void)?
+    private(set) var isTracking = false
+
+    override func mouseDown(with event: NSEvent) {
+      guard self.isEnabled else { return }
+      self.isTracking = true
+      self.onEditingChanged?(true)
+      defer {
+        self.isTracking = false
+        self.onEditingChanged?(false)
+      }
+      super.mouseDown(with: event)
+    }
+
+    @objc func valueChanged() {
+      self.onChange?(self.doubleValue)
+    }
   }
 }
 

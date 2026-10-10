@@ -54,7 +54,8 @@ final class CoreBrightnessService: ObservableObject {
       if let temperatureClient = NightShiftTemperatureClient(client: client) {
         self.nightShiftTemperature = NightShiftTemperatureController(
           read: { await temperatureClient.read() },
-          write: { await temperatureClient.write($0) }
+          write: { await temperatureClient.write($0) },
+          log: { DiagnosticLog.shared.record($0) }
         )
       }
     }
@@ -178,6 +179,7 @@ final class CoreBrightnessService: ObservableObject {
 
   func setNightShift(_ on: Bool) {
     guard let c = blueLightClient else { return }
+    DiagnosticLog.shared.record("Night Shift requested enabled=\(on)")
     Self.setBoolCall(c, "setEnabled:", on)
     self.nightShiftEnabled = on
   }

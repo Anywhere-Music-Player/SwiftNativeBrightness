@@ -6,7 +6,11 @@ Settings → Diagnostics keeps the most recent 200 events in `~/Library/Logs/Swi
 
 Run `./Tests/test-night-shift.sh` from the repository root on macOS 14 or later with Swift 5.9 or later. The script creates a temporary Swift package containing the actual controller source and its regression tests, then removes the temporary package when it finishes. It does not change system display settings.
 
-The seven tests cover live readback, unavailable values, rejected writes, value clamping, stale reads, dragging and coalescing slow writes. These are controller tests; they do not verify private CoreBrightness APIs, physical displays or the appearance of the app menu.
+The eight tests cover live readback, unavailable values, rejected writes, value clamping, stale reads, dragging, coalescing slow writes and concise diagnostics. Night Shift logs changed readbacks, drag boundaries, toggle requests and write failures; unchanged polling results are omitted. These are controller tests; they do not verify private CoreBrightness APIs, physical displays or the appearance of the app menu.
+
+`./Tests/test-night-shift-menu.sh` is an interactive reproducer still under investigation, not a reliable automated regression gate. Run it in a logged-in macOS session with Accessibility access. It opens a temporary status menu using the production controls and a fake backend, moves the cursor for several seconds, then restores it and removes its isolated preferences. It attempts a menu cancelled mid-drag, dragging after reopening, disabling/re-enabling Night Shift during a drag, the disabled control, and backend readback. It never calls CoreBrightness or changes display settings. Missing Accessibility access is an error, not a passing test.
+
+Exploratory runs reproduced a retained drag with the SwiftUI slider and recovery with the AppKit slider, but subsequent runs of this harness also failed to deliver mouse events consistently. The reported intermittent freeze immediately after enabling Night Shift remains unconfirmed as fixed. Controller test results and a successful build do not establish that this user scenario is resolved.
 
 Run settings preference tests with `./Tests/test-settings.sh`. These cover stored and inverted values, callback ordering, external changes, reset reads and launch-at-login status. Regression checks require per-display telemetry and unchanged notifications to leave Settings untouched, while real settings changes and resets still notify the UI.
 
