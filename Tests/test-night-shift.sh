@@ -5,7 +5,11 @@ test_root="$(mktemp -d "${TMPDIR:-/tmp}/swiftnativebrightness-tests.XXXXXX")"
 trap 'rm -rf "$test_root"' EXIT
 mkdir -p "$test_root/Sources/MenuControls" "$test_root/Tests/MenuControlsTests"
 cp "$project_root/SwiftNativeBrightness/Support/NightShiftTemperatureController.swift" "$test_root/Sources/MenuControls/"
+cp "$project_root/SwiftNativeBrightness/Support/NightShiftTemperatureClient.swift" "$test_root/Sources/MenuControls/"
+cp "$project_root/SwiftNativeBrightness/Support/CoreBrightnessService.swift" "$test_root/Sources/MenuControls/"
+cp "$project_root/SwiftNativeBrightness/Support/DiagnosticLog.swift" "$test_root/Sources/MenuControls/"
 cp "$project_root/Tests/NightShiftTemperatureControllerTests.swift" "$test_root/Tests/MenuControlsTests/"
+cp "$project_root/Tests/CoreBrightnessServiceTests.swift" "$test_root/Tests/MenuControlsTests/"
 cat > "$test_root/Package.swift" <<'PACKAGE'
 // swift-tools-version: 5.9
 import PackageDescription

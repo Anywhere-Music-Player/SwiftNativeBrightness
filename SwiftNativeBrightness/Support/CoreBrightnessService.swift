@@ -32,7 +32,7 @@ private let _SLSSetAppearanceThemeNotifying: (@convention(c) (Bool, Bool) -> Voi
 final class CoreBrightnessService: ObservableObject {
   static let shared = CoreBrightnessService()
 
-  @Published var nightShiftEnabled = false
+  @Published private(set) var nightShiftEnabled = false
   @Published var trueToneEnabled = false
   @Published var darkModeEnabled = false
   private(set) var nightShiftAvailable = false
@@ -44,28 +44,47 @@ final class CoreBrightnessService: ObservableObject {
   private var blueLightClient: NSObject?
   private var trueToneClient: NSObject?
   private(set) var nightShiftTemperature: NightShiftTemperatureController?
+  private let diagnosticLog: DiagnosticLog
+  private let readDarkMode: @Sendable () -> Bool?
+  private var nightShiftStatusRevision: UInt64 = 0
 
-  private init() {
-    guard dlopen("/System/Library/PrivateFrameworks/CoreBrightness.framework/CoreBrightness", RTLD_LAZY) != nil else { return }
-    if let cls = NSClassFromString("CBBlueLightClient") as? NSObject.Type {
-      let client = cls.init()
-      self.blueLightClient = client
-      self.nightShiftAvailable = true
+  private convenience init() {
+    let loaded = dlopen("/System/Library/PrivateFrameworks/CoreBrightness.framework/CoreBrightness", RTLD_LAZY) != nil
+    var blueLightClient: NSObject?
+    var trueToneClient: NSObject?
+    if loaded {
+      if let cls = NSClassFromString("CBBlueLightClient") as? NSObject.Type { blueLightClient = cls.init() }
+      if let cls = NSClassFromString("CBTrueToneClient") as? NSObject.Type { trueToneClient = cls.init() }
+    }
+    self.init(blueLightClient: blueLightClient, trueToneClient: trueToneClient,
+              diagnosticLog: .shared, readDarkMode: { _SLSGetAppearanceTheme?() })
+    if loaded {
+      self.refresh()
+      self.observeSystemChanges()
+    }
+  }
+
+  /// Injectable clients keep service-level ordering tests off the real display settings.
+  init(blueLightClient: NSObject?, trueToneClient: NSObject?, diagnosticLog: DiagnosticLog,
+       readDarkMode: @escaping @Sendable () -> Bool?)
+  {
+    self.blueLightClient = blueLightClient
+    self.trueToneClient = trueToneClient
+    self.diagnosticLog = diagnosticLog
+    self.readDarkMode = readDarkMode
+    self.nightShiftAvailable = blueLightClient != nil
+    if let client = blueLightClient {
       if let temperatureClient = NightShiftTemperatureClient(client: client) {
         self.nightShiftTemperature = NightShiftTemperatureController(
           read: { await temperatureClient.read() },
           write: { await temperatureClient.write($0) },
-          log: { DiagnosticLog.shared.record($0) }
+          log: { diagnosticLog.record($0) }
         )
       }
     }
-    if let cls = NSClassFromString("CBTrueToneClient") as? NSObject.Type {
-      let client = cls.init()
-      self.trueToneClient = client
+    if let client = trueToneClient {
       self.trueToneAvailable = Self.boolCall(client, "supported") && Self.boolCall(client, "available")
     }
-    self.refresh()
-    self.observeSystemChanges()
   }
 
   /// Keep the published state live while the panel is closed, so it opens already-correct
@@ -96,7 +115,12 @@ final class CoreBrightnessService: ObservableObject {
   /// Re-read the current system state (the user may have toggled it via Control Center).
   /// The reads are XPC round-trips, so they run off the main thread to keep
   /// panel opening snappy; results publish back on main.
-  func refresh() {
+  @discardableResult
+  func refresh() -> Task<Void, Never> {
+    // Invalidate older snapshots, including reads still finishing True Tone
+    // or appearance queries after they already captured the Night Shift state.
+    self.nightShiftStatusRevision &+= 1
+    let statusRevision = self.nightShiftStatusRevision
     // Strength-only changes do not always emit the status callback. The
     // existing panel-open and visible-panel refreshes cover those too.
     if let nightShiftTemperature {
@@ -106,39 +130,49 @@ final class CoreBrightnessService: ObservableObject {
     // thread, but NSObject is not Sendable; box them across the hop.
     let blueBox = UncheckedSendable(value: blueLightClient)
     let ttBox = UncheckedSendable(value: trueToneClient)
-    DispatchQueue.global(qos: .userInitiated).async {
-      var nightShift: Bool?
-      if let c = blueBox.value {
-        var buf = [UInt8](repeating: 0, count: 64)
-        let sel = NSSelectorFromString("getBlueLightStatus:")
-        if c.responds(to: sel) {
-          typealias Fn = @convention(c) (NSObject, Selector, UnsafeMutableRawPointer) -> Bool
-          let ok = buf.withUnsafeMutableBytes {
-            unsafeBitCast(c.method(for: sel), to: Fn.self)(c, sel, $0.baseAddress!)
+    let readDarkMode = self.readDarkMode
+    return Task {
+      let (nightShift, trueTone, ttAvailable, dark): (Bool?, Bool?, Bool, Bool?) = await withCheckedContinuation { continuation in
+        DispatchQueue.global(qos: .userInitiated).async {
+          var nightShift: Bool?
+          if let c = blueBox.value {
+            var buf = [UInt8](repeating: 0, count: 64)
+            let sel = NSSelectorFromString("getBlueLightStatus:")
+            if c.responds(to: sel) {
+              typealias Fn = @convention(c) (NSObject, Selector, UnsafeMutableRawPointer) -> Bool
+              let ok = buf.withUnsafeMutableBytes {
+                unsafeBitCast(c.method(for: sel), to: Fn.self)(c, sel, $0.baseAddress!)
+              }
+              // Status struct layout {BOOL active, BOOL enabled, ...}, enabled is at offset 1
+              if ok { nightShift = buf[1] != 0 }
+            }
           }
-          // Status struct layout {BOOL active, BOOL enabled, ...}, enabled is at offset 1
-          if ok { nightShift = buf[1] != 0 }
+          var trueTone: Bool?
+          var ttAvailable = false
+          if let c = ttBox.value {
+            // Re-check every refresh: availability flips with the lid (clamshell
+            // hides True Tone system-wide), and init may have run lid-closed.
+            ttAvailable = Self.boolCall(c, "supported") && Self.boolCall(c, "available")
+            if ttAvailable { trueTone = Self.boolCall(c, "enabled") }
+          }
+          continuation.resume(returning: (nightShift, trueTone, ttAvailable, readDarkMode()))
         }
       }
-      var trueTone: Bool?
-      var ttAvailable = false
-      if let c = ttBox.value {
-        // Re-check every refresh: availability flips with the lid (clamshell
-        // hides True Tone system-wide), and init may have run lid-closed.
-        ttAvailable = Self.boolCall(c, "supported") && Self.boolCall(c, "available")
-        if ttAvailable { trueTone = Self.boolCall(c, "enabled") }
-      }
-      let dark = _SLSGetAppearanceTheme?()
-      DispatchQueue.main.async {
-        if let nightShift { self.nightShiftEnabled = nightShift }
-        if self.trueToneAvailable != ttAvailable { self.trueToneAvailable = ttAvailable }
-        if let trueTone { self.trueToneEnabled = trueTone }
-        // Don't clobber an optimistic toggle: the async theme change
-        // may still be in flight, and a stale read here snaps the
-        // button back for a beat (the native control never does).
-        if let dark, Date().timeIntervalSince(self.lastDarkModeSetAt) > 3.0 {
-          self.darkModeEnabled = dark
+      if let nightShift, nightShift != self.nightShiftEnabled {
+        if statusRevision == self.nightShiftStatusRevision {
+          self.diagnosticLog.record("Night Shift status enabled=\(nightShift)")
+          self.nightShiftEnabled = nightShift
+        } else {
+          self.diagnosticLog.record("Night Shift ignored stale status enabled=\(nightShift) current=\(self.nightShiftEnabled)")
         }
+      }
+      if self.trueToneAvailable != ttAvailable { self.trueToneAvailable = ttAvailable }
+      if let trueTone { self.trueToneEnabled = trueTone }
+      // Don't clobber an optimistic toggle: the async theme change
+      // may still be in flight, and a stale read here snaps the
+      // button back for a beat (the native control never does).
+      if let dark, Date().timeIntervalSince(self.lastDarkModeSetAt) > 3.0 {
+        self.darkModeEnabled = dark
       }
     }
   }
@@ -179,7 +213,9 @@ final class CoreBrightnessService: ObservableObject {
 
   func setNightShift(_ on: Bool) {
     guard let c = blueLightClient else { return }
-    DiagnosticLog.shared.record("Night Shift requested enabled=\(on)")
+    // A pre-toggle read must never undo this command when it publishes later.
+    self.nightShiftStatusRevision &+= 1
+    self.diagnosticLog.record("Night Shift requested enabled=\(on)")
     Self.setBoolCall(c, "setEnabled:", on)
     self.nightShiftEnabled = on
   }
